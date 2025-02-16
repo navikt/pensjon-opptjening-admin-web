@@ -1,0 +1,74 @@
+4c4
+<   name: omsorgsopptjening-bestem-pensjonsopptjening
+---
+>   name: omsorgsopptjening-bestem-pensjonsopptjening-q1
+13c13
+<       value: https://pdl-api.dev-fss-pub.nais.io/graphql
+---
+>       value: https://pdl-api-q1.dev-fss-pub.nais.io/graphql
+15c15
+<       value: dev-fss.pdl.pdl-api
+---
+>       value: dev-fss.pdl.pdl-api-q1
+17c17
+<       value: https://pensjon-pen-q2.dev-fss-pub.nais.io/pen
+---
+>       value: https://disabled.com
+19c19
+<       value: dev-fss.pensjon-q2.pensjon-pen-q2
+---
+>       value: tbd
+21c21
+<       value: https://oppgave.dev-fss-pub.nais.io/api/v1/oppgaver
+---
+>       value: https://disabled.com
+23c23
+<       value: dev-fss.oppgavehandtering.oppgave
+---
+>       value: tbd
+25c25
+<       value: https://pensjon-popp-q2.dev-fss-pub.nais.io/popp/api
+---
+>       value: https://pensjon-popp.dev-fss-pub.nais.io/popp/api
+27c27
+<       value: dev-fss.pensjonopptjening.pensjon-popp-q2
+---
+>       value: dev-fss.pensjonopptjening.pensjon-popp-q1
+29c29
+<       value: pensjonopptjening.omsorgsopptjening
+---
+>       value: pensjonopptjening.omsorgsopptjening-q1
+31c31
+<       value: omsorgsopptjening-bestem-pensjonsopptjening
+---
+>       value: omsorgsopptjening-bestem-pensjonsopptjening-q1
+33c33
+<       value: "2022"
+---
+>       value: "2021"
+44c44
+<         name: omsorgsopptjening-bestem-pensjonsopptjening-db
+---
+>         name: omsorgsopptjening-bestem-pensjonsopptjening-db-q1
+47c47
+<           - name: omsorgsopptjening-bestem-pensjonsopptjening-db
+---
+>           - name: omsorgsopptjening-bestem-pensjonsopptjening-db-q1
+57,60c57,58
+<         - host: pdl-api.dev-fss-pub.nais.io
+<         - host: pensjon-pen-q2.dev-fss-pub.nais.io
+<         - host: oppgave.dev-fss-pub.nais.io
+<         - host: pensjon-popp-q2.dev-fss-pub.nais.io
+---
+>         - host: pdl-api-q1.dev-fss-pub.nais.io
+>         - host: pensjon-popp.dev-fss-pub.nais.io
+64c62
+<     - https://omsorgsopptjening-bestem-pensjonsopptjening.intern.dev.nav.no
+---
+>     - https://omsorgsopptjening-bestem-pensjonsopptjening-q1.intern.dev.nav.no
+77,78c75,76
+<     min: 1
+<     max: 1
+---
+>     min: 4
+>     max: 4

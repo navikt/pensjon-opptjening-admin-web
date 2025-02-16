@@ -1,0 +1,28 @@
+name: Bygg branch and create image
+
+on:
+  push:
+    branches:
+      - '*'
+      - '*/*'
+      - '!main'
+jobs:
+  build:
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+      - name: 'Setup Java'
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+          cache: 'gradle'
+      - name: 'Build code'
+        run: |
+          ./gradlew build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

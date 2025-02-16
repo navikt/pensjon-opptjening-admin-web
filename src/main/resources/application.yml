@@ -1,0 +1,18 @@
+management:
+  endpoints:
+    metrics:
+      enabled: true
+    web:
+      exposure:
+        include: info, health, metrics, prometheus
+    export:
+      prometheus:
+        enabled: true
+    prometheus:
+      enabled: true
+
+no.nav.security.jwt:
+  issuer:
+    azure:
+      discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
+      accepted_audience: ${AZURE_APP_CLIENT_ID}
