@@ -17,7 +17,7 @@ class AdminWebApi() {
         private val secureLog: Logger = LoggerFactory.getLogger("secure")
     }
 
-    @GetMapping("/hello)", consumes = [APPLICATION_FORM_URLENCODED_VALUE], produces = [TEXT_PLAIN_VALUE])
+    @GetMapping("/hello", consumes = [APPLICATION_FORM_URLENCODED_VALUE], produces = [TEXT_PLAIN_VALUE])
     fun sayHello(
     ): ResponseEntity<String> {
         return ResponseEntity.ok("Hello world")

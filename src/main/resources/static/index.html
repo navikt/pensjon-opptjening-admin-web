@@ -16,104 +16,8 @@
             } else {
                 document.getElementById("tjeneste").value = "rekjor_meldinger"
             }
-            oppdater_tjeneste()
             oppdater_miljo()
             if (hjelpetekst_skjult) toggleHjelpetekst()
-        }
-
-        function oppdater_tjeneste() {
-            let tjeneste = document.getElementById("tjeneste").value;
-
-            function setActionAndText(action, text) {
-                document.getElementById("mainForm").action = action
-                document.getElementById("mainForm_submit").textContent = text
-            }
-
-            function setBegrunnelseEnabled(enabled) {
-                let begrunnelse = document.getElementById("begrunnelse");
-                begrunnelse.disabled = !enabled
-                if (enabled) {
-                    begrunnelse.style.backgroundColor = null
-                } else {
-                    begrunnelse.style.backgroundColor = "lightgrey"
-                }
-            }
-
-            function setArEnabled(enabled) {
-                let ar = document.getElementById("ar");
-                ar.disabled = !enabled
-                if (enabled) {
-                    ar.style.backgroundColor = null
-                } else {
-                    ar.style.backgroundColor = "lightgrey"
-                }
-            }
-
-            switch (tjeneste) {
-                case "rekjor_meldinger":
-                    setActionAndText("/bestem/rekjor-flere", "Rekjør meldinger")
-                    setBegrunnelseEnabled(true)
-                    setArEnabled(false)
-                    break;
-                case "stopp_meldinger":
-                    setActionAndText("/bestem/stopp-flere", "Stopp meldinger")
-                    setBegrunnelseEnabled(true)
-                    setArEnabled(false)
-                    break;
-                case "avslutt_meldinger":
-                    setActionAndText("/bestem/avslutt-flere", "Avslutt meldinger")
-                    setBegrunnelseEnabled(true)
-                    setArEnabled(false)
-                    break;
-                case "restart_oppgaver":
-                    setActionAndText("/bestem/restart-oppgaver", "Restart oppgaver")
-                    setBegrunnelseEnabled(false)
-                    setArEnabled(false)
-                    break;
-                case "kanseller_oppgaver":
-                    setActionAndText("/bestem/kanseller-oppgaver", "Kanseller oppgaver")
-                    setBegrunnelseEnabled(true)
-                    setArEnabled(false)
-                    break;
-                case "restart_brev":
-                    setActionAndText("/bestem/restart-brev", "Restart brev")
-                    setBegrunnelseEnabled(false)
-                    setArEnabled(false)
-                    break;
-                case "stopp_brev":
-                    setActionAndText("/bestem/stopp-brev", "Stopp brev")
-                    setBegrunnelseEnabled(false)
-                    setArEnabled(false)
-                    break;
-                case "stopp_godskriving":
-                    setActionAndText("/bestem/stopp-godskriving", "Stopp godskriving")
-                    setBegrunnelseEnabled(false)
-                    setArEnabled(false)
-                    break;
-                case "restart_godskriving":
-                    setActionAndText("/bestem/restart-godskriving", "Restart godskriving")
-                    setBegrunnelseEnabled(false)
-                    setArEnabled(false)
-                    break;
-                case "hent_oppgavestatus":
-                    setActionAndText("/bestem/hent-oppgavestatus", "Hent oppgave-status")
-                    setBegrunnelseEnabled(false)
-                    setArEnabled(false)
-                    break;
-                case "kontrollbehandling":
-                    setActionAndText("/bestem/kontrollbehandling", "Kontrollbehandling")
-                    setBegrunnelseEnabled(true)
-                    setArEnabled(true)
-                    break;
-                case "test":
-                    setActionAndText("/bestem/test", "TEST")
-                    setBegrunnelseEnabled(true)
-                    setArEnabled(false)
-                    break;
-                default:
-                    setActionAndText("INVALID", "Feil: ukjent tjeneste: " + tjeneste)
-            }
-
         }
 
         function oppdater_miljo() {
@@ -133,11 +37,11 @@
                     setColor("darkblue", "white")
                     setText("Localhost")
                     break;
-                case "omsorgsopptjening-bestem-pensjonsopptjening.intern.dev.nav.no":
+                case "pensjon-opptjening-admin-web.intern.dev.nav.no":
                     setColor("lightgreen", "black")
                     setText("Test")
                     break;
-                case "omsorgsopptjening-bestem-pensjonsopptjening.intern.nav.no":
+                case "pensjon-opptjening-admin-web.intern.nav.no":
                     setColor("red", "yellow")
                     setText("PRODUKSJON")
                     break;
@@ -181,106 +85,51 @@
 <br>
 
 <div id="hjelpetekst" class="hjelpetekst">
-    <p>
-    <ul>
-        <li>Begrunnelse har ingen funksjonell betydning, men tas vare på i databasen som dokumentasjon</li>
-        <li>Hver UUID vil behandles i separate transaksjoner, og resultatet (inkludert feil pga exceptions) vil
-            returneres tilbake per uuid
-        </li>
-        <li>For UUID'ene vil tegn som ikke er gyldige i en UUID fjernes, og blanke linjer ignoreres. Hver UUID må være
-            på en separat linje.
-        </li>
-    </ul>
-    <ul>
-        <li>Stopping av meldinger vil både stoppe meldingene og all underliggende prosessering (oppgaver, brev).
-            For oppgaver og brev vil de kun stoppes dersom de ikke allerede er prosessert. Oppgaver som er
-            registrert vil ikke bli trukket tilbake (dette må gjøres via kansellering). En stoppet melding vil
-            bli ignorert av prosessering og overvåking, og kan derfor medføre alarmer
-        </li>
-        <li>Rekjøring av meldinger vil først stoppe meldingene, og deretter lagre en ny kopi av samme melding i
-            starttilstanden
-        </li>
-        <li>Avslutting av melding vil markere en melding som avsluttet. Underliggende strukturer vil ikke bli rørt</li>
-        <li>Restart oppgaver vil sette oppgaver som ikke har blitt registrert tilbake til prosessering (med antall
-            retry-forsøk satt tilbake til 0)
-        </li>
-        <li>Restart brev vil sette en brev tilbake til prosessering (med antall retry-forsøk satt tilbake til 0)</li>
-        <li>kanseller oppgaver vil kansellere registrerte oppgaver. Oppgaver som er ferdigbehandlet vil ikke bli rørt,
-            mens oppgaver som er nye eller påstartet av en saksbehandler vil bli lukket (med status "feilregistrert")
-        </li>
-        <li>hent status på oppgave vil hente behandlingsstatus for en registrert oppgave</li>
-        <li>
-            Kontrollbehandling gjennomfører en ny vilkårsvurdering av grunnlaget til alle meldinger tilnyttet
-            angitt innlesingid. Behandlingen vil ikke godskrive opptjening, opprette brev og/eller oppgaver, men tar
-            vare på informasjon som forteller om dette ville skjedd eller ikke. Tiltenkt for kontroll og analyseformål,
-            f.eks for å identifisere historiske feil etter ny funksjonalitet er lagt til, vurdere konsekvens av regelendringer,
-            estimere behov for manuelt arbeid etc. Begrunnelse brukes som en referanse til en bestem kontrollkjøring,
-            slik at vi kan flere kontrollkjøringer kan gjennomføres uten at resultatene påvirker hverandre på tvers av
-            ulike kjøringer.
-        </li>
-    </ul>
-    <p>
-        <li>oppgaver som har blitt kansellert/markert som feilregistrert vil se ut som de ikke finnes</li>
-        <li>Forsøk på å avslutte en stoppet melding som har blitt rekjørt vil feile (pga unik-indeks)</li>
-    </p>
-
-    </p>
-    <p>
-        Prosessering av disse meldingene vil bli stoppet, men allerede videresendt informasjon (brev, oppgaver,
-        godskriving) vil ikke bli kansellert/tilbakekalt.
-    </p>
+    <table>
+        <tr>
+            <th>List filer</th>
+            <td>List filer som er tilgjengelig på sftp-server</td>
+        </tr>
+        <tr>
+            <th>Overfør fil</th>
+            <td>Overfør fil fra sftp-server til popp</td>
+        </tr>
+    </table>
 </div>
 
 <br>
 
-<form>
-    <label for="tjeneste">Velg funksjon</label>
-    <select id="tjeneste" onchange="velg_tjeneste()">
-        <option value="rekjor_meldinger">Rekjør meldinger (stopp og opprett ny kopi)</option>
-        <option value="stopp_meldinger">Stopp meldinger (stopper også oppgaver og brev)</option>
-        <option value="avslutt_meldinger">Avslutt meldinger (marker som ferdige)</option>
-        <option value="restart_oppgaver">Restart oppgaver (begynn prosessering igjen fra klar)</option>
-        <option value="kanseller_oppgaver">Kanseller (trekk tilbake) oppgaver</option>
-        <option value="hent_oppgavestatus">Hent status på oppgave</option>
-        <option value="restart_brev">Restart brev (begynn prosessering igjen fra klar)</option>
-        <option value="stopp_brev">Stopp brev</option>
-        <option value="stopp_godskriving">Stopp godskriving</option>
-        <option value="restart_godskriving">Restart godskriving</option>
-        <option value="kontrollbehandling">Kontrollbehandling</option>
-        <!-- option value="test">TEST (intern, midlertidig)</option -->
-    </select>
-</form>
 
-<form id="mainForm" action="/bestem/rekjor-flere" method="post">
+<form id="form1" action="/listfiler" method="post">
     <table>
         <tbody>
         <tr>
             <td>
-                <label for="begrunnelse">Begrunnelse</label>
             </td>
             <td>
-                <input type="text" id="begrunnelse" name="begrunnelse" size="50" maxlength="50"/>
+                <input type="submit" name="list" value="List filer">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<form id="form2" action="/overfor" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label for="filnavn">filnavn</label>
+            </td>
+            <td>
+                <input type="text" name="filnavn" id="filnavn" size="100">
             </td>
         </tr>
         <tr>
             <td>
-                <label for="ar">År</label>
             </td>
             <td>
-                <input type="number" id="ar" name="ar"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <button type="submit" id="mainForm_submit">Velg tjeneste</button>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="uuidliste">UUID'er</label>
-            </td>
-            <td>
-                <textarea name="uuidliste" id="uuidliste" rows="50" cols="50"></textarea>
+                <input type="submit" name="overfør" value="Overfør fil">
             </td>
         </tr>
         </tbody>
