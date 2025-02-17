@@ -6,9 +6,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 internal class PoppClientConfig(
-    @Value("\${POPP_URL}") private val baseUrl: String,
 ) {
     private val poppClient = PoppClient(
-        baseUrl = baseUrl,
     )
 }
