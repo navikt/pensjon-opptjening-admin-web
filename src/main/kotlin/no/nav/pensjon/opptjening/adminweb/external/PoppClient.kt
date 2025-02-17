@@ -6,7 +6,7 @@ import pensjon.opptjening.azure.ad.client.TokenProvider
 
 internal class PoppClient(
     private val baseUrl: String,
-    private val tokenProvider: TokenProvider,
+//    private val tokenProvider: TokenProvider,
 ) {
 
     companion object {

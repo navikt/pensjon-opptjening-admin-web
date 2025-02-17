@@ -9,10 +9,10 @@ import pensjon.opptjening.azure.ad.client.TokenProvider
 @Configuration
 internal class PoppClientConfig(
     @Value("\${POPP_URL}") private val baseUrl: String,
-    @Qualifier("poppTokenProvider") private val tokenProvider: TokenProvider,
+//    @Qualifier("poppTokenProvider") private val tokenProvider: TokenProvider,
 ) {
     private val poppClient = PoppClient(
         baseUrl = baseUrl,
-        tokenProvider = tokenProvider,
+//        tokenProvider = tokenProvider,
     )
 }
