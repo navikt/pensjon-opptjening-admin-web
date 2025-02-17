@@ -1,4 +1,4 @@
-package no.nav.pensjon.opptjening.adminweb.godskriv.external
+package no.nav.pensjon.opptjening.adminweb.external
 
 import no.nav.pensjon.opptjening.adminweb.config.AzureAdTokenClientConfig
 import org.springframework.beans.factory.annotation.Value

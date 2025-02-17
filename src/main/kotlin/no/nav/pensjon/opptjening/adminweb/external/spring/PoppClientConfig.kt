@@ -1,6 +1,6 @@
-package no.nav.pensjon.opptjening.adminweb.godskriv.external.spring
+package no.nav.pensjon.opptjening.adminweb.external.spring
 
-import no.nav.pensjon.opptjening.adminweb.godskriv.external.PoppClient
+import no.nav.pensjon.opptjening.adminweb.external.PoppClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration

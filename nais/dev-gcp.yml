@@ -9,7 +9,7 @@ spec:
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev-gcp
-    - name: POPP_URL
+    - name: FILADAPTER_URL
       value: https://pensjon-opptjening-filadapter.intern.dev.nav.no
   azure:
     sidecar:
