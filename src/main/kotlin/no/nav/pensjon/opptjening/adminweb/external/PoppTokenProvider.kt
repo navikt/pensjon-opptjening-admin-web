@@ -9,8 +9,8 @@ import pensjon.opptjening.azure.ad.client.AzureAdTokenProvider
 import pensjon.opptjening.azure.ad.client.AzureAdVariableConfig
 import pensjon.opptjening.azure.ad.client.TokenProvider
 
-@Component("poppTokenProvider")
-@Profile("dev-gcp", "prod-gcp")
+// @Component("poppTokenProvider")
+// @Profile("dev-gcp", "prod-gcp")
 class PoppTokenProvider(
     @Value("\${POPP_API_ID}") val appId: String,
     azureAdConfig: AzureAdTokenClientConfig,
