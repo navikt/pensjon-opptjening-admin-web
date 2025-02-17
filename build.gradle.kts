@@ -10,7 +10,6 @@ val assertJVersion = "3.27.3"
 val jsonUnitVersion = "4.1.0"
 val wiremockVersion = "3.11.0"
 val mockitoVersion = "5.4.0"
-val unleashVersion = "9.2.6"
 val navTokenSupportVersion = "5.0.16"
 val hibernateValidatorVersion = "8.0.1.Final"
 val junit5Version = "5.11.3"
@@ -60,7 +59,6 @@ dependencies {
     implementation("org.springframework.kafka:spring-kafka")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework:spring-aspects")
-    implementation("io.getunleash:unleash-client-java:$unleashVersion")
     implementation("no.nav.security:token-validation-spring:$navTokenSupportVersion")
 
     // Internal libraries
