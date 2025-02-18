@@ -15,7 +15,7 @@ class PoppClientConfig(
     @Bean
     fun filAdapterKlient(): FilAdapterKlient {
         return FilAdapterKlient(
-            baseUrl = "baseUrl",
+            baseUrl = baseUrl,
             nextToken = { poppTokenProvider.getToken() }
         )
     }
