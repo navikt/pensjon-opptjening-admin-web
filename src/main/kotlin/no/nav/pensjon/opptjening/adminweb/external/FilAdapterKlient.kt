@@ -11,18 +11,22 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class FilAdapterKlient(
     private val baseUrl: String,
     private val nextToken: () -> String,
-)  {
+) {
 
     companion object {
         private val log = NAVLog(FilAdapterKlient::class)
     }
 
-    fun opprettFil(oppprettFilRequest: String) : String {
-        return callPopp(
-            url = "$baseUrl/fil/opprett",
-            body = oppprettFilRequest,
-            responseType = String::class.java,
-        )
+    fun listFiler(): String {
+        val request = Request.Builder()
+            .get()
+            .url("$baseUrl/list")
+            .addHeader("accept", "application/json")
+            .addHeader("Authorization", "Bearer ${nextToken()}")
+            .build()
+
+        val client = OkHttpClient.Builder().build()
+        return client.newCall(request).execute().use { response -> response.body!!.string() }
     }
 
     private fun buildRequest(url: String, body: Any): Request {

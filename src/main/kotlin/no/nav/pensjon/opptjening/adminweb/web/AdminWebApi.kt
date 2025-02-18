@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @Protected
-class AdminWebApi() {
+class AdminWebApi(
+    private val filAdapterKlient: FilAdapterKlient,
+) {
     companion object {
         private val log: Logger = LoggerFactory.getLogger(AdminWebApi::class.java)
         private val secureLog: Logger = LoggerFactory.getLogger("secure")
-        private val filAdapterKlient = FilAdapterKlient
     }
 
     @GetMapping("/list")
-    fun listFiler() : ResponseEntity<String> {
-        return ResponseEntity.ok("Hello world")
+    fun listFiler(): ResponseEntity<String> {
+        return ResponseEntity.ok(filAdapterKlient.listFiler())
     }
 
     @GetMapping("/ping")
