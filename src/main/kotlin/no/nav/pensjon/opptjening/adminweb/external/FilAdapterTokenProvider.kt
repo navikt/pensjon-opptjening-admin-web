@@ -10,7 +10,7 @@ import pensjon.opptjening.azure.ad.client.AzureAdVariableConfig
 import pensjon.opptjening.azure.ad.client.TokenProvider
 
 @Component("poppTokenProvider")
-@Profile("dev-fss", "prod-fss")
+@Profile("dev-gcp", "prod-gcp")
 class FilAdapterTokenProvider(
     @Value("\${FILADAPTER_API_ID}") val appId: String,
     azureAdConfig: AzureAdTokenClientConfig,
