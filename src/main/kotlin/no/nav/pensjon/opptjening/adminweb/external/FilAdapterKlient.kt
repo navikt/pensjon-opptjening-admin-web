@@ -18,6 +18,8 @@ class FilAdapterKlient(
     }
 
     fun listFiler(): String {
+        log.open.info("listFiler: baseUrl=$baseUrl")
+
         val request = Request.Builder()
             .get()
             .url("$baseUrl/list")
