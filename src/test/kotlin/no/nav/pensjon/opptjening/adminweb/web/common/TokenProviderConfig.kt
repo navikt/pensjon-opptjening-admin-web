@@ -8,7 +8,7 @@ import pensjon.opptjening.azure.ad.client.mock.MockTokenProvider
 @Configuration
 class TokenProviderConfig {
 
-    // @Bean("poppTokenProvider")
+    @Bean("poppTokenProvider")
     fun poppTokenProvider(): TokenProvider = MockTokenProvider(MOCK_TOKEN)
 
     companion object {

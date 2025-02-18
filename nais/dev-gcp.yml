@@ -11,6 +11,8 @@ spec:
       value: dev-gcp
     - name: FILADAPTER_URL
       value: https://pensjon-opptjening-filadapter.intern.dev.nav.no
+    - name: FILADAPTER_API_ID
+      value: dev-fss.pensjonopptjening.pensjon-opptjening-filadapter
   azure:
     sidecar:
       enabled: true
