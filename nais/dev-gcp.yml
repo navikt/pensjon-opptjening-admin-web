@@ -32,7 +32,7 @@ spec:
   accessPolicy:
     outbound:
       external:
-        - host: pensjon-opptjening-filadapter.intern.dev.nav.no
+        - host: pensjon-opptjening-filadapter.dev-fss-pub.nais.io
   image: {{ image }}
   liveness:
     path: /actuator/health/liveness
