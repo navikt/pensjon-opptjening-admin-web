@@ -23,7 +23,7 @@ class FilAdapterKlient(
         val request = Request.Builder()
             .get()
             .url("$baseUrl/list")
-            .addHeader("accept", "application/json")
+//            .addHeader("accept", "application/json")
             .addHeader("Authorization", "Bearer ${nextToken()}")
             .build()
 
