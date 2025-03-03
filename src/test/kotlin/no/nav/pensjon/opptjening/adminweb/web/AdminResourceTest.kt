@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest(classes = [Application::class])
-class AdminWebApiTest{
+class AdminResourceTest{
 
     @Autowired
-    private lateinit var adminWebApi: AdminWebApi
+    private lateinit var adminResource: AdminResource
     @Test
     fun `hello world`() {
     }

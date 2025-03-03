@@ -5,15 +5,17 @@ import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @Protected
-class AdminWebApi(
+class AdminResource(
     private val filAdapterKlient: FilAdapterKlient,
 ) {
     companion object {
-        private val log = NAVLog(AdminWebApi::class)
+        private val log = NAVLog(AdminResource::class)
     }
 
     @GetMapping("/list")
@@ -23,6 +25,19 @@ class AdminWebApi(
         } catch (e: Throwable) {
             log.open.warn("Feil ved listing av filer: ${e.message}")
             log.secure.warn("Feil ved listing av filer: ${e.message}", e)
+            ResponseEntity.internalServerError().body("Intern feil")
+        }
+    }
+
+    @PostMapping("/overfor")
+    fun overforFil(
+        @RequestPart("filnavn") filnavn: String,
+    ): ResponseEntity<String> {
+        return try {
+            ResponseEntity.ok(filAdapterKlient.overførFil(filnavn))
+        } catch (e: Throwable) {
+            log.open.warn("Feil ved overføring av fil: ${e.message}")
+            log.secure.warn("Feil ved overføring av fil: ${e.message}", e)
             ResponseEntity.internalServerError().body("Intern feil")
         }
     }
