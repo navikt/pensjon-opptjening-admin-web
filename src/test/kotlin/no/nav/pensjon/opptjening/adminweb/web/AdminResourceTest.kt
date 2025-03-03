@@ -10,6 +10,7 @@ class AdminResourceTest{
 
     @Autowired
     private lateinit var adminResource: AdminResource
+
     @Test
     fun `hello world`() {
     }

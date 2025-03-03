@@ -1,4 +1,4 @@
-package no.nav.pensjon.opptjening.filadapter.web.dto
+package no.nav.pensjon.opptjening.adminweb.external.dto
 
 import java.util.*
 
