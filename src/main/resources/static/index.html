@@ -67,7 +67,7 @@
     </script>
 </head>
 <body onload="init()">
-<h1>Omsorgsopptjening - Administrasjon av meldinger</h1>
+<h1>Pensjonopptjening - Admin</h1>
 
 <p>
 <div id="environmentLabel">
@@ -83,10 +83,12 @@
         <tr>
             <th>List filer</th>
             <td>List filer som er tilgjengelig på sftp-server</td>
+            <td>Bestill behandling</td>
         </tr>
         <tr>
             <th>Overfør fil</th>
-            <td>Overfør fil fra sftp-server til popp</td>
+            <td>Overfør fil fra sftp-server til POPP</td>
+            <td>Bestiller behandling i POPP</td>
         </tr>
     </table>
 </div>
@@ -129,5 +131,28 @@
         </tbody>
     </table>
 </form>
+
+<form id="behandling" action="/behandling" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label for="request">Request</label>
+            </td>
+            <td>
+                <input type="text" name="request" id="request" style="height:500px; width:500px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="submit" name="bestill" value="Bestill behandling">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
 </body>
 </html>

@@ -42,10 +42,22 @@ class AdminResource(
         }
     }
 
+    @PostMapping("/behandling")
+    fun behandling(
+        @RequestParam("request") request: String,
+    ): ResponseEntity<String> {
+        return try {
+            ResponseEntity.ok(request)
+        } catch (e: Throwable) {
+            log.open.warn("Feil ved bestilling av behandling: ${e.message}")
+            log.secure.warn("Feil ved bestilling av behandling: ${e.message}", e)
+            ResponseEntity.internalServerError().body("Intern feil")
+        }
+    }
+
     @GetMapping("/ping")
     fun ping(): ResponseEntity<String> {
         log.open.info("Sa hei")
         return ResponseEntity.ok("pong")
     }
-
 }
