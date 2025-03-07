@@ -18,7 +18,7 @@ class PoppKlient(
     fun bestillBehandling(request: String): String {
         val request = Request.Builder()
             .post(request.toRequestBody())
-            .url("$baseUrl/api/behandling")
+            .url("$baseUrl/behandling")
             .addHeader("Authorization", "Bearer ${nextToken()}")
             .addHeader("Content-Type", "application/json")
             .build()
