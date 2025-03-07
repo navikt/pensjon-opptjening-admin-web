@@ -9,13 +9,7 @@
     </style>
     <script>
         function init() {
-            let tjeneste = localStorage.getItem("tjeneste");
             let hjelpetekst_skjult = localStorage.getItem("hjelpetekst") == "hidden"
-            if (tjeneste) {
-                document.getElementById("tjeneste").value = tjeneste
-            } else {
-                document.getElementById("tjeneste").value = "rekjor_meldinger"
-            }
             oppdater_miljo()
             if (hjelpetekst_skjult) toggleHjelpetekst()
         }
