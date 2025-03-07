@@ -1,6 +1,7 @@
 package no.nav.pensjon.opptjening.adminweb.web
 
 import no.nav.pensjon.opptjening.adminweb.external.FilAdapterKlient
+import no.nav.pensjon.opptjening.adminweb.external.PoppKlient
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.ResponseEntity
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 @Protected
 class AdminResource(
     private val filAdapterKlient: FilAdapterKlient,
+    private val poppKlient: PoppKlient,
 ) {
     companion object {
         private val log = NAVLog(AdminResource::class)
@@ -47,7 +49,7 @@ class AdminResource(
         @RequestParam("request") request: String,
     ): ResponseEntity<String> {
         return try {
-            ResponseEntity.ok(request)
+            ResponseEntity.ok(poppKlient.bestillBehandling(request))
         } catch (e: Throwable) {
             log.open.warn("Feil ved bestilling av behandling: ${e.message}")
             log.secure.warn("Feil ved bestilling av behandling: ${e.message}", e)

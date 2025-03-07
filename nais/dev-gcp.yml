@@ -14,6 +14,10 @@ spec:
       value: https://pensjon-opptjening-filadapter.dev-fss-pub.nais.io
     - name: FILADAPTER_API_ID
       value: dev-fss.pensjonopptjening.pensjon-opptjening-filadapter
+    - name: POPP_URL
+      value: https://pensjon-popp-q2.dev-fss-pub.nais.io
+    - name: POPP_API_ID
+      value: dev-fss.pensjonopptjening.pensjon-popp-q2
   azure:
     sidecar:
       enabled: true
@@ -33,6 +37,7 @@ spec:
     outbound:
       external:
         - host: pensjon-opptjening-filadapter.dev-fss-pub.nais.io
+        - host: pensjon-popp-q2.dev-fss-pub.nais.io
   image: {{ image }}
   liveness:
     path: /actuator/health/liveness

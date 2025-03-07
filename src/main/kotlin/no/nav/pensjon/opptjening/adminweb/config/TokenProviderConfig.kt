@@ -14,8 +14,24 @@ import pensjon.opptjening.azure.ad.client.TokenProvider
 class TokenProviderConfig {
 
     @Bean
-    fun tokenProvider(
+    fun filadapterTokenProvider(
         @Value("\${FILADAPTER_API_ID}") appId: String,
+        @Value("\${AZURE_APP_CLIENT_ID}") azureAppClientId: String,
+        @Value("\${AZURE_APP_CLIENT_SECRET}") azureAppClientSecret: String,
+        @Value("\${AZURE_APP_WELL_KNOWN_URL}") wellKnownUrl: String,
+    ): TokenProvider {
+        val config: AzureAdConfig = AzureAdVariableConfig(
+            azureAppClientId = azureAppClientId,
+            azureAppClientSecret = azureAppClientSecret,
+            targetApiId = appId,
+            wellKnownUrl = wellKnownUrl,
+        )
+        return AzureAdTokenProvider(config)
+    }
+
+    @Bean
+    fun poppTokenProvider(
+        @Value("\${POPP_API_ID}") appId: String,
         @Value("\${AZURE_APP_CLIENT_ID}") azureAppClientId: String,
         @Value("\${AZURE_APP_CLIENT_SECRET}") azureAppClientSecret: String,
         @Value("\${AZURE_APP_WELL_KNOWN_URL}") wellKnownUrl: String,
