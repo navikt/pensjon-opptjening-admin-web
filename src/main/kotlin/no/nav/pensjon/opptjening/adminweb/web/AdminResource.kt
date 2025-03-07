@@ -57,6 +57,19 @@ class AdminResource(
         }
     }
 
+    @PostMapping("/behandling/rekjor")
+    fun rekjørBehandling(
+        @RequestParam("behandlingId") behandlingId: String,
+    ): ResponseEntity<String> {
+        return try {
+            ResponseEntity.ok(poppKlient.gjenopptaBehandling(behandlingId))
+        } catch (e: Throwable) {
+            log.open.warn("Feil ved rekjøring av behandling: ${e.message}")
+            log.secure.warn("Feil ved rekjøring av behandling: ${e.message}", e)
+            ResponseEntity.internalServerError().body("Intern feil")
+        }
+    }
+
     @GetMapping("/ping")
     fun ping(): ResponseEntity<String> {
         log.open.info("Sa hei")

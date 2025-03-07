@@ -86,6 +86,10 @@
             <th>Bestill behandling</th>
             <td>Bestiller behandling i POPP</td>
         </tr>
+        <tr>
+            <th>Gjenoppta behandling</th>
+            <td>Gjenopptar behandlingen fra seneste steg som ikke er fullført</td>
+        </tr>
     </table>
 </div>
 
@@ -136,7 +140,7 @@
                 <label for="request">Request</label>
             </td>
             <td>
-                <textarea id="request" name="request" form="behandling" rows="50" cols="50"></textarea>
+                <textarea id="request" name="request" form="behandling" rows="25" cols="50"></textarea>
             </td>
         </tr>
         <tr>
@@ -144,6 +148,28 @@
             </td>
             <td>
                 <input type="submit" name="bestill" value="Bestill behandling">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<form id="behandling_gjenoppta" action="/behandling/gjenoppta" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label for="behandlingId">BehandlingId</label>
+            </td>
+            <td>
+                <input type="text" name="behandlingId" id="behandlingId" size="100">
+            </td>
+        </tr>
+            <tr>
+            <td>
+            </td>
+            <td>
+                <input type="submit" name="gjenoppta" value="Gjenoppta">
             </td>
         </tr>
         </tbody>
