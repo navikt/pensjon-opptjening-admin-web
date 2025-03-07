@@ -57,7 +57,7 @@ class AdminResource(
         }
     }
 
-    @PostMapping("/behandling/rekjor")
+    @PostMapping("/behandling/gjenoppta")
     fun rekjørBehandling(
         @RequestParam("behandlingId") behandlingId: String,
     ): ResponseEntity<String> {
