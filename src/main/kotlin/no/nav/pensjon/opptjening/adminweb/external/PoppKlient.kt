@@ -28,10 +28,10 @@ class PoppKlient(
 
     fun gjenopptaBehandling(behandlingId: String): String {
         val request = Request.Builder()
-            .post(behandlingId.toRequestBody())
+            .put(behandlingId.toRequestBody())
             .url("$baseUrl/behandling/gjenoppta")
             .addHeader("Authorization", "Bearer ${nextToken()}")
-            .addHeader("Content-Type", "application/json")
+            .addHeader("Content-Type", "text/plain")
             .build()
 
         return client.newCall(request).execute().use { response -> response.body!!.string() }
