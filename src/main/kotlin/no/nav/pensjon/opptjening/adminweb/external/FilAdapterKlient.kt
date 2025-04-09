@@ -45,7 +45,9 @@ class FilAdapterKlient(
             .addHeader("Authorization", "Bearer ${nextToken()}")
             .build()
 
-        val client = OkHttpClient.Builder().build()
+        val client = OkHttpClient.Builder()
+            .readTimeout(180, TimeUnit.SECONDS)
+            .build()
         return client.newCall(request).execute().use { response -> response.body!!.string() }
     }
 }
