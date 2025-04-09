@@ -1,7 +1,9 @@
 package no.nav.pensjon.opptjening.adminweb.external
 
+import no.nav.pensjon.opptjening.adminweb.external.dto.ListFilerResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.OverforFilRequest
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
+import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.mapToObject
 import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -16,18 +18,19 @@ class FilAdapterKlient(
         private val log = NAVLog(FilAdapterKlient::class)
     }
 
-    fun listFiler(): String {
+    fun listFiler(): ListFilerResponse {
         log.open.info("listFiler: baseUrl=$baseUrl")
 
         val request = Request.Builder()
             .get()
             .url("$baseUrl/list")
-//            .addHeader("accept", "application/json")
             .addHeader("Authorization", "Bearer ${nextToken()}")
             .build()
 
         val client = OkHttpClient.Builder().build()
-        return client.newCall(request).execute().use { response -> response.body!!.string() }
+        val responseBody = client.newCall(request).execute().use { response -> response.body!!.string() }
+        return responseBody.mapToObject(ListFilerResponse::class.java)
+
     }
 
     fun overførFil(filnavn: String): String {
@@ -36,7 +39,6 @@ class FilAdapterKlient(
         val request = Request.Builder()
             .post(OverforFilRequest(filnavn).toJson().toRequestBody("application/json".toMediaTypeOrNull()))
             .url("$baseUrl/overfor")
-//            .addHeader("accept", "application/json")
             .addHeader("Authorization", "Bearer ${nextToken()}")
             .build()
 

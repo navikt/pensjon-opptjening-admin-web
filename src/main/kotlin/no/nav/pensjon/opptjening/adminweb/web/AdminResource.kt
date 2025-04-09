@@ -4,6 +4,7 @@ import no.nav.pensjon.opptjening.adminweb.external.FilAdapterKlient
 import no.nav.pensjon.opptjening.adminweb.external.PoppKlient
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.security.token.support.core.api.Protected
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -20,10 +21,15 @@ class AdminResource(
         private val log = NAVLog(AdminResource::class)
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list", produces = [MediaType.TEXT_PLAIN_VALUE])
     fun listFiler(): ResponseEntity<String> {
         return try {
-            ResponseEntity.ok(filAdapterKlient.listFiler())
+            val filer = filAdapterKlient.listFiler()
+            val body = filer.filer.joinToString("\n") {
+                val lagret = if (it.lagret) " lagret" else ""
+                "${it.filnavn}[${it.size}$lagret]"
+            }
+            ResponseEntity.ok(body)
         } catch (e: Throwable) {
             log.open.warn("Feil ved listing av filer: ${e.message}")
             log.secure.warn("Feil ved listing av filer: ${e.message}", e)
