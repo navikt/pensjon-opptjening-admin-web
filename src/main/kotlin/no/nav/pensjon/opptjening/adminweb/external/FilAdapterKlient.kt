@@ -9,6 +9,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.util.concurrent.TimeUnit
 
 class FilAdapterKlient(
     private val baseUrl: String,
@@ -27,7 +28,9 @@ class FilAdapterKlient(
             .addHeader("Authorization", "Bearer ${nextToken()}")
             .build()
 
-        val client = OkHttpClient.Builder().build()
+        val client = OkHttpClient.Builder()
+            .readTimeout(180, TimeUnit.SECONDS)
+            .build()
         val responseBody = client.newCall(request).execute().use { response -> response.body!!.string() }
         return responseBody.mapToObject(ListFilerResponse::class.java)
 
