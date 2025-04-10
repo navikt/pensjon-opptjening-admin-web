@@ -32,8 +32,12 @@ class FilAdapterKlient(
             .readTimeout(180, TimeUnit.SECONDS)
             .build()
         val responseBody = client.newCall(request).execute().use { response -> response.body!!.string() }
-        return responseBody.mapToObject(ListFilerResponse::class.java)
-
+        return try {
+            responseBody.mapToObject(ListFilerResponse::class.java)
+        } catch (e: Throwable) {
+            log.secure.error("List filer: kan ikke parse response dra filadapter: $responseBody", e)
+            throw FilAdapterException("Kan ikke parse response fra filadapter", e)
+        }
     }
 
     fun overførFil(filnavn: String): String {
@@ -50,4 +54,6 @@ class FilAdapterKlient(
             .build()
         return client.newCall(request).execute().use { response -> response.body!!.string() }
     }
+
+    class FilAdapterException(msg: String, e: Throwable?) : RuntimeException(msg, e)
 }

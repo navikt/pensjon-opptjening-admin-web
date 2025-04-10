@@ -30,6 +30,9 @@ class AdminResource(
                 "${it.filnavn}[${it.size}$lagret]"
             }
             ResponseEntity.ok(body)
+        } catch (e: FilAdapterKlient.FilAdapterException) {
+            log.secure.error("Feil ved listing av filer", e)
+            ResponseEntity.internalServerError().body("Feil i kommunikasjon med filadapter")
         } catch (e: Throwable) {
             log.open.warn("Feil ved listing av filer: ${e.message}")
             log.secure.warn("Feil ved listing av filer: ${e.message}", e)
