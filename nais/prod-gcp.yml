@@ -26,8 +26,7 @@ spec:
       allowAllUsers: false
       claims:
         groups:
-          - id: "7ef907b4-ec9f-47dd-ab41-4e54ba32ceb1" #AAD pensjonopptjening testgruppe
-
+          - id: "abd710c7-b01d-48e6-98b9-83ff615edf26" #AAD pensjonopptjening
   secureLogs:
     enabled: true
   ingresses:
