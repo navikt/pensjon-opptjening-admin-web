@@ -38,3 +38,11 @@ jobs:
           CLUSTER: dev-gcp
           IMAGE: ${{ steps.docker-push.outputs.image }}
           TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
+
+      - name: 'Deploy til prod-gcp'
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          RESOURCE: nais/prod-gcp.yml
+          CLUSTER: prod-gcp
+          IMAGE: ${{ steps.docker-push.outputs.image }}
+          TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
