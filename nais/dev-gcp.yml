@@ -10,7 +10,6 @@ spec:
     - name: SPRING_PROFILES_ACTIVE
       value: dev-gcp
     - name: FILADAPTER_URL
-#      value: https://pensjon-opptjening-filadapter.intern.dev.nav.no
       value: https://pensjon-opptjening-filadapter.dev-fss-pub.nais.io
     - name: FILADAPTER_API_ID
       value: dev-fss.pensjonopptjening.pensjon-opptjening-filadapter
