@@ -19,7 +19,7 @@ val okHttpVersion = "1111"
 val snakeYamlVersion = "2.3"
 val snappyJavaVersion = "1.1.10.7"
 // val httpClient5Version = "5.3.1" // TODO: 5.4 feiler med NoClassDefFoundError
-val httpClient5Version = "5.4.2" // TODO: 5.4 feiler med NoClassDefFoundError
+val httpClient5Version = "5.4.3" // TODO: 5.4 feiler med NoClassDefFoundError
 val httpClientVersion = "4.5.14" // deprecated, men brukes av
 
 plugins {
