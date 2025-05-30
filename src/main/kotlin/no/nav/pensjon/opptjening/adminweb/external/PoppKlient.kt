@@ -36,4 +36,15 @@ class PoppKlient(
 
         return client.newCall(request).execute().use { response -> response.body!!.string() }
     }
+
+    fun pgiInntekt(requestBody: String): String {
+        val request = Request.Builder()
+            .post(requestBody.toRequestBody())
+            .url("$baseUrl/inntekt/pgi")
+            .addHeader("Authorization", "Bearer ${nextToken()}")
+            .addHeader("Content-Type", "application/json")
+            .build()
+
+        return client.newCall(request).execute().use { response -> response.body!!.string() }
+    }
 }

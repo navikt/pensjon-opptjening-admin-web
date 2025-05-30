@@ -137,10 +137,10 @@
         <tbody>
         <tr>
             <td>
-                <label for="request">Request</label>
+                <label for="request">Start ny behandling</label>
             </td>
             <td>
-                <textarea id="request" name="request" form="behandling" rows="25" cols="50"></textarea>
+                <textarea id="request" name="request" form="behandling" rows="10" cols="50"></textarea>
             </td>
         </tr>
         <tr>
@@ -159,7 +159,7 @@
         <tbody>
         <tr>
             <td>
-                <label for="behandlingId">BehandlingId</label>
+                <label for="behandlingId">Gjennoppta Behandling for Id</label>
             </td>
             <td>
                 <input type="text" name="behandlingId" id="behandlingId" size="100">
@@ -170,6 +170,29 @@
             </td>
             <td>
                 <input type="submit" name="gjenoppta" value="Gjenoppta">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+
+<form id="post-pgi-inntekt" action="/inntekt/pgi" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label for="pgi-inntekt">PGI-inntekt</label>
+            </td>
+            <td>
+                <textarea id="pgi-inntekt" name="pgi-inntekt" form="post-pgi-inntekt" rows="10" cols="50"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="submit" name="add-pgi-inntekt" value="Send PGI-inntekt">
             </td>
         </tr>
         </tbody>
