@@ -35,7 +35,7 @@ class FilAdapterKlient(
         return try {
             responseBody.mapToObject(ListFilerResponse::class.java)
         } catch (e: Throwable) {
-            log.secure.error("List filer: kan ikke parse response dra filadapter: $responseBody", e)
+            log.secure.error("List filer: kan ikke parse response fra filadapter: $responseBody", e)
             throw FilAdapterException("Kan ikke parse response fra filadapter", e)
         }
     }

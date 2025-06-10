@@ -1,3 +1,5 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -28,7 +30,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
     id("org.springframework.boot") version "3.4.2"
-    id("com.github.ben-manes.versions") version "0.51.0"
+    id("com.github.ben-manes.versions") version "0.52.0"
 }
 
 apply(plugin = "io.spring.dependency-management")
@@ -115,3 +117,14 @@ tasks.withType<Test> {
         )
     }
 }
+
+tasks.withType<DependencyUpdatesTask>().configureEach {
+    rejectVersionIf {
+        isNonStableVersion(candidate.version)
+    }
+}
+
+fun isNonStableVersion(version: String): Boolean {
+    return listOf("BETA","RC","-M",".CR").any { version.uppercase().contains(it) }
+}
+
