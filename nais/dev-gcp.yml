@@ -28,8 +28,6 @@ spec:
         groups:
           - id: "7ef907b4-ec9f-47dd-ab41-4e54ba32ceb1" #AAD pensjonopptjening testgruppe
 
-  secureLogs:
-    enabled: true
   ingresses:
     - https://pensjon-opptjening-admin-web.intern.dev.nav.no
   accessPolicy:
@@ -37,6 +35,9 @@ spec:
       external:
         - host: pensjon-opptjening-filadapter.dev-fss-pub.nais.io
         - host: pensjon-popp-q2.dev-fss-pub.nais.io
+      rules:
+        - application: logging
+          namespace: nais-system
   image: {{ image }}
   liveness:
     path: /actuator/health/liveness
@@ -53,6 +54,10 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: java
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   replicas:
     min: 1
     max: 1
