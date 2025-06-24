@@ -1,2 +1,8 @@
 FILADAPTER_URL: http://localhost:9991/
 POPP_URL: http://localhost:9991/
+
+no.nav.security.jwt:
+  issuer:
+    azure:
+      discoveryurl: http://localhost:${mock-oauth2-server.port}/azure/.well-known/openid-configuration
+      accepted_audience: pensjon-opptjening-admin-web
