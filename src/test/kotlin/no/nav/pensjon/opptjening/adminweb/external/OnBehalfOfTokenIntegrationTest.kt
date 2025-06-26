@@ -49,8 +49,7 @@ class OnBehalfOfTokenIntegrationTest {
             post(urlPathEqualTo("/behandling"))
                 .willReturn(
                     ok()
-                        .withBody("""ok""")
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .withHeader(HttpHeaders.LOCATION, "location")
                 )
         )
 
@@ -67,7 +66,7 @@ class OnBehalfOfTokenIntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION, initialToken)
         )
             .andExpect(status().isOk)
-            .andExpect(content().string("""ok"""))
+            .andExpect(content().string("""location"""))
 
         wiremock.allServeEvents.first().also { event ->
             assertThat(event.request.absoluteUrl).isEqualTo("""${wiremock.baseUrl()}/behandling""")

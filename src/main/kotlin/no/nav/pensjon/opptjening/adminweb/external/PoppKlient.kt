@@ -26,7 +26,7 @@ class PoppKlient(
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .body(request)
             .retrieve()
-            .body<String>()!!
+            .toBodilessEntity().headers.getFirst(HttpHeaders.LOCATION)!!
     }
 
     fun gjenopptaBehandling(behandlingId: String): String {

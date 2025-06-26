@@ -9,7 +9,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
 
 class PoppKlientTest {
 
@@ -32,13 +31,12 @@ class PoppKlientTest {
             post(urlPathEqualTo("/behandling"))
                 .willReturn(
                     ok()
-                        .withBody("""ok""")
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .withHeader(HttpHeaders.LOCATION, "location")
                 )
         )
 
         client.bestillBehandling("""{"first":1,"second":"2"}""").also {
-            assertThat(it).isEqualTo("ok")
+            assertThat(it).isEqualTo("location")
         }
 
         wiremock.allServeEvents.first().also {
