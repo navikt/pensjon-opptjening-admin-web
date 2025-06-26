@@ -1,5 +1,4 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -15,7 +14,6 @@ val mockitoVersion = "5.4.0"
 val navTokenSupportVersion = "5.0.29"
 val hibernateValidatorVersion = "8.0.1.Final"
 val junit5Version = "5.11.3"
-val okHttpVersion = "1111"
 
 
 val snakeYamlVersion = "2.4"
@@ -62,9 +60,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework:spring-aspects")
     implementation("no.nav.security:token-validation-spring:$navTokenSupportVersion")
+    implementation("no.nav.security:token-client-spring:$navTokenSupportVersion")
 
-    // Internal libraries
-    implementation("no.nav.pensjonopptjening:pensjon-opptjening-azure-ad-client:$azureAdClient")
     // Kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     // Log and metric
@@ -90,7 +87,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junit5Version")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit5Version")
 
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     testImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
 
 }

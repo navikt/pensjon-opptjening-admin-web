@@ -11,12 +11,8 @@ spec:
       value: dev-gcp
     - name: FILADAPTER_URL
       value: https://pensjon-opptjening-filadapter.dev-fss-pub.nais.io
-    - name: FILADAPTER_API_ID
-      value: dev-fss.pensjonopptjening.pensjon-opptjening-filadapter
     - name: POPP_URL
       value: https://pensjon-popp-q2.dev-fss-pub.nais.io/popp/api
-    - name: POPP_API_ID
-      value: dev-fss.pensjonopptjening.pensjon-popp-q2
   azure:
     sidecar:
       enabled: true
