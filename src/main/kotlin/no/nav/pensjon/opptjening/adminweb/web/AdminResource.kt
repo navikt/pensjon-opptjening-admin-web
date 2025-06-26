@@ -79,19 +79,6 @@ class AdminResource(
         }
     }
 
-    @PostMapping("/inntekt/pgi")
-    fun pgiInntekt(
-        @RequestParam("request") requestBody: String,
-    ): ResponseEntity<String> {
-        return try {
-            ResponseEntity.ok(poppKlient.pgiInntekt(requestBody))
-        } catch (e: Throwable) {
-            log.open.warn("Feil ved post av pgi inntekt: ${e.message}")
-            log.secure.warn("Feil ved post av pgi inntekt: ${e.message}", e)
-            ResponseEntity.internalServerError().body("Intern feil")
-        }
-    }
-
     @GetMapping("/ping")
     fun ping(): ResponseEntity<String> {
         log.open.info("Sa hei")

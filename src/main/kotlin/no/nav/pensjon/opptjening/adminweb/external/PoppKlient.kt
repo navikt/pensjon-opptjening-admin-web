@@ -38,14 +38,4 @@ class PoppKlient(
             .retrieve()
             .body<String>()!!
     }
-
-    fun pgiInntekt(requestBody: String): String {
-        return restClient
-            .put()
-            .uri("/inntekt/pgi")
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .body(requestBody)
-            .retrieve()
-            .body<String>()!!
-    }
 }
