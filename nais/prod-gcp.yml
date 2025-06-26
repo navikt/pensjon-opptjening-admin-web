@@ -50,7 +50,7 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: java
-    Logging:
+    logging:
       destinations:
         - id: elastic
         - id: loki
