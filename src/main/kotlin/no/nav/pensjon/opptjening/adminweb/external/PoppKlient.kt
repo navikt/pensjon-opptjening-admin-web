@@ -1,50 +1,51 @@
 package no.nav.pensjon.opptjening.adminweb.external
 
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
+import org.apache.hc.core5.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.client.ClientHttpRequestInterceptor
+import org.springframework.web.client.RestClient
+import org.springframework.web.client.body
 
 class PoppKlient(
-    private val baseUrl: String,
-    private val nextToken: () -> String,
+    baseUrl: String,
+    oboTokenInterceptor: ClientHttpRequestInterceptor,
+    private val restClient: RestClient = RestClient.builder()
+        .baseUrl(baseUrl)
+        .requestInterceptor(oboTokenInterceptor)
+        .build()
 ) {
-    private val client = OkHttpClient.Builder().build()
-
     companion object {
         private val log = NAVLog(PoppKlient::class)
     }
 
     fun bestillBehandling(request: String): String {
-        val request = Request.Builder()
-            .post(request.toRequestBody())
-            .url("$baseUrl/behandling")
-            .addHeader("Authorization", "Bearer ${nextToken()}")
-            .addHeader("Content-Type", "application/json")
-            .build()
-
-        return client.newCall(request).execute().use { response -> response.body!!.string() }
+        return restClient
+            .post()
+            .uri("/behandling")
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .body(request)
+            .retrieve()
+            .body<String>()!!
     }
 
     fun gjenopptaBehandling(behandlingId: String): String {
-        val request = Request.Builder()
-            .put(behandlingId.toRequestBody())
-            .url("$baseUrl/behandling/gjenoppta")
-            .addHeader("Authorization", "Bearer ${nextToken()}")
-            .addHeader("Content-Type", "text/plain")
-            .build()
-
-        return client.newCall(request).execute().use { response -> response.body!!.string() }
+        return restClient
+            .put()
+            .uri("/behandling/gjenoppta")
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE)
+            .body(behandlingId)
+            .retrieve()
+            .body<String>()!!
     }
 
     fun pgiInntekt(requestBody: String): String {
-        val request = Request.Builder()
-            .post(requestBody.toRequestBody())
-            .url("$baseUrl/inntekt/pgi")
-            .addHeader("Authorization", "Bearer ${nextToken()}")
-            .addHeader("Content-Type", "application/json")
-            .build()
-
-        return client.newCall(request).execute().use { response -> response.body!!.string() }
+        return restClient
+            .put()
+            .uri("/inntekt/pgi")
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .body(requestBody)
+            .retrieve()
+            .body<String>()!!
     }
 }

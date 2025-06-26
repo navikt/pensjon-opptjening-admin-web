@@ -12,14 +12,15 @@ class TestTokenIssuer(
 
     fun token(
         issuerId: String,
-        audience: String = "pensjon-opptjening-admin-web"
+        audience: String = "pensjon-opptjening-admin-web",
+        subject: String = "subject"
     ): String {
         return oauth2Server.issueToken(
             issuerId = issuerId,
             clientId = "theclientid",
             tokenCallback = DefaultOAuth2TokenCallback(
                 issuerId = issuerId,
-                subject = "subject",
+                subject = subject,
                 typeHeader = JOSEObjectType.JWT.type,
                 audience = listOf(audience),
                 claims = mapOf("" to ""),
@@ -30,8 +31,9 @@ class TestTokenIssuer(
 
     fun bearerToken(
         issuerId: String,
-        audience: String = "pensjon-opptjening-admin-web"
+        audience: String = "pensjon-opptjening-admin-web",
+        subject: String = "subject"
     ): String {
-        return """Bearer ${token(issuerId, audience)}"""
+        return """Bearer ${token(issuerId, audience, subject)}"""
     }
 }

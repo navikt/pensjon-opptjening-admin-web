@@ -16,7 +16,7 @@ class FiladapterKlientTest {
 
     private val client: FilAdapterKlient = FilAdapterKlient(
         baseUrl = wiremock.baseUrl(),
-        nextToken = { "token" }
+        oboTokenInterceptor = MockOnBehalfOfTokenInterceptor()
     )
 
     companion object {
@@ -52,7 +52,7 @@ class FiladapterKlientTest {
 
         wiremock.allServeEvents.first().also {
             assertThat(it.request.absoluteUrl).isEqualTo("""${wiremock.baseUrl()}/list""")
-            assertThat(it.request.getHeader(HttpHeaders.AUTHORIZATION)).isEqualTo("Bearer token")
+            assertThat(it.request.getHeader(HttpHeaders.AUTHORIZATION)).isEqualTo("Bearer obo-token")
         }
     }
 }

@@ -5,7 +5,6 @@ import com.github.tomakehurst.wiremock.client.WireMock.post
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
-import net.javacrumbs.jsonunit.assertj.assertThatJson
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -16,7 +15,7 @@ class PoppKlientTest {
 
     private val client: PoppKlient = PoppKlient(
         baseUrl = wiremock.baseUrl(),
-        nextToken = { "token" }
+        oboTokenInterceptor = MockOnBehalfOfTokenInterceptor()
     )
 
     companion object {
@@ -44,7 +43,7 @@ class PoppKlientTest {
 
         wiremock.allServeEvents.first().also {
             assertThat(it.request.absoluteUrl).isEqualTo("""${wiremock.baseUrl()}/behandling""")
-            assertThat(it.request.getHeader(HttpHeaders.AUTHORIZATION)).isEqualTo("Bearer token")
+            assertThat(it.request.getHeader(HttpHeaders.AUTHORIZATION)).isEqualTo("Bearer obo-token")
             assertThat(it.request.bodyAsString).isEqualTo("""{"first":1,"second":"2"}""")
         }
     }
