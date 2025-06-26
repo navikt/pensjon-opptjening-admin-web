@@ -62,8 +62,6 @@ dependencies {
     implementation("no.nav.security:token-validation-spring:$navTokenSupportVersion")
     implementation("no.nav.security:token-client-spring:$navTokenSupportVersion")
 
-    // Internal libraries
-    implementation("no.nav.pensjonopptjening:pensjon-opptjening-azure-ad-client:$azureAdClient")
     // Kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     // Log and metric
