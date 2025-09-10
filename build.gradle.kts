@@ -3,31 +3,31 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val azureAdClient = "0.0.7"
-val jacksonVersion = "2.19.0"
-val logbackEncoderVersion = "8.0"
+val jacksonVersion = "2.20.0"
+val logbackEncoderVersion = "8.1"
 val springCloudContractVersion = "4.0.4"
-val mockkVersion = "1.14.2"
-val assertJVersion = "3.27.3"
+val mockkVersion = "1.14.5"
+val assertJVersion = "3.27.4"
 val jsonUnitVersion = "4.1.1"
-val wiremockVersion = "3.13.0"
-val mockitoVersion = "5.4.0"
-val navTokenSupportVersion = "5.0.29"
+val wiremockVersion = "3.13.1"
+val mockitoVersion = "6.0.0"
+val navTokenSupportVersion = "5.0.30"
 val hibernateValidatorVersion = "8.0.1.Final"
 val junit5Version = "5.11.3"
 
 
-val snakeYamlVersion = "2.4"
-val snappyJavaVersion = "1.1.10.7"
+val snakeYamlVersion = "2.5"
+val snappyJavaVersion = "1.1.10.8"
 // val httpClient5Version = "5.3.1" // TODO: 5.4 feiler med NoClassDefFoundError
 val httpClient5Version = "5.5" // TODO: 5.4 feiler med NoClassDefFoundError
 val httpClientVersion = "4.5.14" // deprecated, men brukes av
 
 plugins {
-    val kotlinVersion = "2.1.21"
+    val kotlinVersion = "2.2.10"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
-    id("org.springframework.boot") version "3.5.0"
+    id("org.springframework.boot") version "3.5.5"
     id("com.github.ben-manes.versions") version "0.52.0"
 }
 
