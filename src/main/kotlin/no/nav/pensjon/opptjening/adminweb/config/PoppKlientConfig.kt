@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class PoppKlientConfig(
-    @Value("\${POPP_URL}") private val baseUrl: String,
-    @Autowired private val tokenInterceptor: OAuth2ClientRequestInterceptor,
+    @param:Value($$"${POPP_URL}") private val baseUrl: String,
+    @param:Autowired private val tokenInterceptor: OAuth2ClientRequestInterceptor,
 ) {
 
     @Bean
