@@ -7,19 +7,18 @@ val jacksonVersion = "2.20.0"
 val logbackEncoderVersion = "8.1"
 val springCloudContractVersion = "4.0.4"
 val mockkVersion = "1.14.5"
-val assertJVersion = "3.27.4"
+val assertJVersion = "3.27.6"
 val jsonUnitVersion = "4.1.1"
 val wiremockVersion = "3.13.1"
 val mockitoVersion = "6.0.0"
-val navTokenSupportVersion = "5.0.30"
+val navTokenSupportVersion = "5.0.37"
 val hibernateValidatorVersion = "8.0.1.Final"
-val junit5Version = "5.11.3"
+val junit5Version = "5.12.2"
 
 
 val snakeYamlVersion = "2.5"
 val snappyJavaVersion = "1.1.10.8"
-// val httpClient5Version = "5.3.1" // TODO: 5.4 feiler med NoClassDefFoundError
-val httpClient5Version = "5.5" // TODO: 5.4 feiler med NoClassDefFoundError
+val httpClient5Version = "5.5"
 val httpClientVersion = "4.5.14" // deprecated, men brukes av
 
 plugins {
@@ -27,7 +26,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
-    id("org.springframework.boot") version "3.5.5"
+    id("org.springframework.boot") version "3.5.6"
     id("com.github.ben-manes.versions") version "0.52.0"
 }
 
