@@ -31,10 +31,34 @@ jobs:
         with:
           team: pensjonopptjening
           tag: ${{ github.sha }}
-      - name: 'Deploy til dev-gcp'
+      - name: 'Deploy til dev-gcp (q2)'
         uses: nais/deploy/actions/deploy@v2
         env:
-          RESOURCE: nais/dev-gcp.yml
+          RESOURCE: nais/dev-gcp-q2.yml
+          CLUSTER: dev-gcp
+          IMAGE: ${{ steps.docker-push.outputs.image }}
+          TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
+
+      - name: 'Deploy til dev-gcp (q1)'
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          RESOURCE: nais/dev-gcp-q1.yml
+          CLUSTER: dev-gcp
+          IMAGE: ${{ steps.docker-push.outputs.image }}
+          TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
+
+      - name: 'Deploy til dev-gcp (q0)'
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          RESOURCE: nais/dev-gcp-q0.yml
+          CLUSTER: dev-gcp
+          IMAGE: ${{ steps.docker-push.outputs.image }}
+          TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
+
+      - name: 'Deploy til dev-gcp (q5)'
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          RESOURCE: nais/dev-gcp-q5.yml
           CLUSTER: dev-gcp
           IMAGE: ${{ steps.docker-push.outputs.image }}
           TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
