@@ -71,6 +71,7 @@
             localStorage.setItem("hjelpetekst", hjelpetekst.hidden ? "hidden" : "shown")
         }
     </script>
+    <title>Pensjon opptjening - admin</title>
 </head>
 <body onload="init()">
 <h1>Pensjonopptjening - Admin</h1>
@@ -177,7 +178,7 @@
                 <input type="text" name="behandlingId" id="behandlingId" size="100">
             </td>
         </tr>
-            <tr>
+        <tr>
             <td>
             </td>
             <td>
@@ -187,6 +188,19 @@
         </tbody>
     </table>
 </form>
+
+<form id="pgi:status" action="/pgi/status" method="get">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="submit" name="pgi-status" value="Sjekk status på pgi-innlesing">
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 </body>
 </html>

@@ -3,6 +3,7 @@ package no.nav.pensjon.opptjening.adminweb.web
 import no.nav.pensjon.opptjening.adminweb.external.FilAdapterKlient
 import no.nav.pensjon.opptjening.adminweb.external.PoppKlient
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
+import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -75,6 +76,17 @@ class AdminResource(
         } catch (e: Throwable) {
             log.open.warn("Feil ved rekjøring av behandling: ${e.message}")
             log.secure.warn("Feil ved rekjøring av behandling: ${e.message}", e)
+            ResponseEntity.internalServerError().body("Intern feil")
+        }
+    }
+
+    @GetMapping("/pgi/status")
+    fun pgiStatus(): ResponseEntity<String> {
+        return try {
+            ResponseEntity.ok(poppKlient.hentPgiInnlesingStatus().toJson())
+        } catch (t: Throwable) {
+            log.open.warn("Kunne ikke hente PGI-status")
+            log.secure.warn("Kunne ikke hente PGI-status", t)
             ResponseEntity.internalServerError().body("Intern feil")
         }
     }
