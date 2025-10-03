@@ -6,6 +6,20 @@
             background-color: white;
             border: 1px solid lightgrey;
         }
+
+        .section-header {
+            text-align: center;
+            background-color: grey;
+            color: white;
+        }
+
+        .prerelease {
+            background-color: lightgrey;
+            color: darkslategray;
+        }
+        .info {
+            background-color: darkgray;
+        }
     </style>
     <script>
         function init() {
@@ -108,6 +122,9 @@
 
 <br>
 
+<div class="section-header">
+    Fil
+</div>
 
 <form id="form1" action="/list" method="get">
     <table>
@@ -144,6 +161,10 @@
         </tbody>
     </table>
 </form>
+
+<div class="section-header">
+    Behandling
+</div>
 
 <form id="behandling" action="/behandling" method="post">
     <table>
@@ -189,18 +210,91 @@
     </table>
 </form>
 
+<div class="section-header">
+    PGI
+</div>
+
 <form id="pgi:status" action="/pgi/status" method="get">
     <table>
         <tbody>
         <tr>
-            <td>
-            </td>
             <td>
                 <input type="submit" name="pgi-status" value="Sjekk status på pgi-innlesing">
             </td>
         </tr>
         </tbody>
     </table>
+</form>
+
+<form id="pgi:list-feilet" action="/pgi/list-feilede" method="get">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <input type="submit" name="pgi-status" value="List feilede">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+
+<form id="pgi:sett-sekvensnummer" action="/pgi/sett-sekvensnummer" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="number" name="sekvensnummer"/>
+                <input type="submit" name="pgi-status" value="Sett sekvensnummer">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<div class="prerelease">
+    <div class="info">
+        Uferdig funksjonalitet
+    </div>
+    <form id="synkroniser-person" action="/pgi/synkroniser-person" method="post">
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <label>
+                        FNR:
+                        <input type="text" class="fnr" name="sekvensnummer"/>
+                    </label>
+                    <label>
+                        År:
+                        <input type="number" class="år" name="ar"/>
+                    </label>
+                    <input type="submit" name="pgi-status" value="Sett sekvensnummer">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+
+    <form id="rekjør-feilede" action="/pgi/rekjor" method="post">
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <input type="submit" name="pgi-rekjor" value="Rekjør feilede">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>
