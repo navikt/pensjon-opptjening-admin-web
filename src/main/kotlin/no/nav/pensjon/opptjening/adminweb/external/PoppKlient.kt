@@ -7,11 +7,7 @@ import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingListFeiledeResponse
 import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingStatusResponse
 import org.apache.hc.core5.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
 import org.springframework.http.client.ClientHttpRequestInterceptor
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
 
@@ -75,7 +71,7 @@ class PoppKlient(
         try {
             return restClient
                 .get()
-                .uri("/pgi/status")
+                .uri("/pgi/feilet/list")
                 .retrieve()
                 .body<PgiInnlesingListFeiledeResponse>()!!
         } catch (t: Throwable) {
@@ -84,11 +80,6 @@ class PoppKlient(
         }
     }
 
-    @PostMapping(
-        path = ["/feilet/rekjor"],
-        consumes = [MediaType.APPLICATION_JSON_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE]
-    )
     // TODO: Tilby senere
     fun rekjorFeilede() {
         // /feilet/rekjor
