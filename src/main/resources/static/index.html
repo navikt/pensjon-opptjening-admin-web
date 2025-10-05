@@ -17,6 +17,7 @@
             background-color: lightgrey;
             color: darkslategray;
         }
+
         .info {
             background-color: darkgray;
         }
@@ -126,7 +127,7 @@
     Fil
 </div>
 
-<form id="form1" action="/list" method="get">
+<form id="form1" action="/fil/list" method="get">
     <table>
         <tbody>
         <tr>
@@ -140,7 +141,7 @@
     </table>
 </form>
 
-<form id="form2" action="/overfor" method="post">
+<form id="form2" action="/fil/overfor" method="post">
     <table>
         <tbody>
         <tr>
@@ -246,8 +247,11 @@
             <td>
             </td>
             <td>
-                <input type="number" name="sekvensnummer"/>
-                <input type="submit" name="pgi-status" value="Sett sekvensnummer">
+                <label>
+                    Dato (yyyy-mm-dd):
+                    <input type="text" name="dato"/>
+                </label>
+                <input type="submit" name="submit" value="Sett sekvensnummer">
             </td>
         </tr>
         </tbody>
