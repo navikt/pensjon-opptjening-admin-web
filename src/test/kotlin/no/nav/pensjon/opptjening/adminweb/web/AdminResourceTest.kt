@@ -31,14 +31,14 @@ class AdminResourceTest {
 
     @Test
     fun `rejects request without token`() {
-        mvc.perform(MockMvcRequestBuilders.get("/list")).andExpect(status().isUnauthorized)
+        mvc.perform(MockMvcRequestBuilders.get("/fil/list")).andExpect(status().isUnauthorized)
     }
 
     @Test
     fun `accepts request with valid token`() {
         whenever(adminResource.listFiler()).thenReturn(ResponseEntity.ok().body("success"))
 
-        mvc.perform(MockMvcRequestBuilders.get("/list").header(AUTHORIZATION, tokenIssuer.bearerToken("azure")))
+        mvc.perform(MockMvcRequestBuilders.get("/fil/list").header(AUTHORIZATION, tokenIssuer.bearerToken("azure")))
             .andExpect(status().isOk)
     }
 }
