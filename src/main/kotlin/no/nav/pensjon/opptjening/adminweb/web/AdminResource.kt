@@ -2,6 +2,7 @@ package no.nav.pensjon.opptjening.adminweb.web
 
 import no.nav.pensjon.opptjening.adminweb.external.FilAdapterKlient
 import no.nav.pensjon.opptjening.adminweb.external.PoppKlient
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerTilForsteRequest
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
 import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingHentRequest
@@ -95,8 +96,8 @@ class AdminResource(
         }
     }
 
-    @PostMapping("/pgi/sett-sekvensnumer")
-    fun pgiStatus(
+    @PostMapping("/pgi/sett-sekvensnummer")
+    fun pgiSettSekvensnummer(
         @RequestParam dato: String,
     ): ResponseEntity<String> {
         val dato = if (dato == "") null else dato
@@ -121,6 +122,23 @@ class AdminResource(
         }
     }
 
+    @PostMapping("/pgi/sett-sekvensnummer-til-forste")
+    fun pgiSettSekvensnummerTilForste(
+    ): ResponseEntity<String> {
+        return try {
+            val response = poppKlient.settSekvensnummer(
+                PgiInnlesingSettSekvensnummerTilForsteRequest(
+                    resetSekvensnummer = false
+                )
+            ).toJson()
+            ResponseEntity.ok(response.toJson())
+        } catch (t: Throwable) {
+            log.open.warn("Kunne ikke sette sekvensnummer")
+            log.secure.warn("Kunne ikke sette sekvensnummer", t)
+            ResponseEntity.internalServerError().body("Intern feil")
+        }
+    }
+
     private fun gyldigIsoDato(dato: String): Boolean {
         return dato.matches("^\\d{4}-\\d{2}-\\d{2}$".toRegex())
     }
@@ -130,7 +148,7 @@ class AdminResource(
     }
 
     @PostMapping("/pgi/synkroniser-person")
-    fun pgiStatus(
+    fun pgiSynkroniserPerson(
         @RequestParam("fnr") fnr: String,
         @RequestParam("ar") ar: Int,
     ): ResponseEntity<String> {

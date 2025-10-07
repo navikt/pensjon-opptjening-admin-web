@@ -1,5 +1,6 @@
 package no.nav.pensjon.opptjening.adminweb.external
 
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerTilForsteRequest
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingHentRequest
 import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingHentResponse
@@ -62,6 +63,16 @@ class PoppKlient(
         return restClient
             .post()
             .uri("/pgi/sekvensnummer/sett")
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .body(request)
+            .retrieve()
+            .body<PgiInnlesingSettSekvensnummerResponse>()!!
+    }
+
+    fun settSekvensnummer(request: PgiInnlesingSettSekvensnummerTilForsteRequest): PgiInnlesingSettSekvensnummerResponse {
+        return restClient
+            .post()
+            .uri("/pgi/sekvensnummer/sett-forste")
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .body(request)
             .retrieve()
