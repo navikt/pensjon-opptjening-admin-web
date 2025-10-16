@@ -8,8 +8,8 @@ on:
 jobs:
   build_and_push:
     permissions:
-      contents: "read"
-      id-token: "write"
+      contents: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
@@ -20,17 +20,37 @@ jobs:
           distribution: 'temurin'
           java-version: 21
           cache: 'gradle'
+
+      - name: 'Setup Gradle'
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: 'Generate and submit dependency graph'
+        uses: gradle/actions/dependency-submission@v5
+
+      - name: 'Setter dato og commit variabel'
+        run: |
+          export TZ=CET
+          echo "DATE=$(date '+%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+          echo "GIT_COMMIT=$(echo ${{github.sha}} | cut -c 1-7)" >> $GITHUB_ENV
+          echo "GIT_BRANCH=$(echo ${{github.ref_name}})" >> $GITHUB_ENV
+
+      - name: 'Configure git reference tag'
+        run: |
+          echo "GIT_REF_TAG=git_${GIT_BRANCH}_${GIT_COMMIT}" >> $GITHUB_ENV
+
       - name: 'Build code'
         run: |
           ./gradlew build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: 'Build and push docker image'
         uses: nais/docker-build-push@v0
         id: docker-push
         with:
           team: pensjonopptjening
-          tag: ${{ github.sha }}
+          tag: ${{ env.GIT_REF_TAG }}
+
       - name: 'Deploy til dev-gcp (q2)'
         uses: nais/deploy/actions/deploy@v2
         env:
@@ -63,10 +83,3 @@ jobs:
           IMAGE: ${{ steps.docker-push.outputs.image }}
           TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
 
-      - name: 'Deploy til prod-gcp'
-        uses: nais/deploy/actions/deploy@v2
-        env:
-          RESOURCE: nais/prod-gcp.yml
-          CLUSTER: prod-gcp
-          IMAGE: ${{ steps.docker-push.outputs.image }}
-          TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
