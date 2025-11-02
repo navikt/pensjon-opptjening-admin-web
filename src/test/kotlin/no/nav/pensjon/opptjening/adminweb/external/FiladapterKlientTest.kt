@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
+import java.util.UUID
 
 class FiladapterKlientTest {
 
@@ -29,11 +30,13 @@ class FiladapterKlientTest {
 
     @Test
     fun `simple request and response`() {
+        fun id() = UUID.randomUUID().toString()
+
         wiremock.givenThat(
             get(urlPathEqualTo("/list"))
                 .willReturn(
                     ok()
-                        .withBody("""{"filer":[{"filnavn":"fil1","size":123,"lagret":true}]}""")
+                        .withBody("""{"filer":[{"filnavn":"fil1","size":123,"lagretMedId":"${id()}", "lagresMedId":[]}]}""")
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 )
         )
@@ -44,7 +47,8 @@ class FiladapterKlientTest {
                     ListFilerResponse.FilMedStatus(
                         filnavn = "fil1",
                         size = 123,
-                        lagret = true
+                        lagretMedId = UUID.randomUUID().toString(),
+                        lagresMedId = emptyList(),
                     )
                 )
             )

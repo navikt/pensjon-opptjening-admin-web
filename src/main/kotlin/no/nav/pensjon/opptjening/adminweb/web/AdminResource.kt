@@ -32,8 +32,9 @@ class AdminResource(
         return try {
             val filer = filAdapterKlient.listFiler()
             val body = filer.filer.joinToString("\n") {
-                val lagret = if (it.lagret) " lagret" else ""
-                "${it.filnavn}[${it.size}$lagret]"
+                val lagret = if (it.lagretMedId != null) " lagret med id ${it.lagretMedId}" else ""
+                val pågående = if (it.lagresMedId.size > 0) " under lagring: ${it.lagresMedId}" else ""
+                "${it.filnavn}[${it.size}$lagret$pågående]"
             }
             ResponseEntity.ok(body)
         } catch (e: FilAdapterKlient.FilAdapterException) {

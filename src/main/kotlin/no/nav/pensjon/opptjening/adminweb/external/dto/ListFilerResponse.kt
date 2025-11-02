@@ -6,6 +6,7 @@ data class ListFilerResponse(
     data class FilMedStatus(
         val filnavn: String,
         val size: Long,
-        val lagret: Boolean,
+        val lagretMedId: String?,
+        val lagresMedId: List<String>
     )
 }
