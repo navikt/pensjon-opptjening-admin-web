@@ -3,14 +3,14 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val azureAdClient = "0.0.7"
-val jacksonVersion = "2.20.0"
+val jacksonVersion = "2.20.1"
 val logbackEncoderVersion = "8.1"
 val springCloudContractVersion = "4.0.4"
-val mockkVersion = "1.14.5"
+val mockkVersion = "1.14.6"
 val assertJVersion = "3.27.6"
-val jsonUnitVersion = "4.1.1"
+val jsonUnitVersion = "5.0.0"
 val wiremockVersion = "3.13.1"
-val mockitoVersion = "6.0.0"
+val mockitoVersion = "6.1.0"
 val navTokenSupportVersion = "5.0.37"
 val hibernateValidatorVersion = "8.0.1.Final"
 val junit5Version = "5.12.2"
@@ -18,16 +18,16 @@ val junit5Version = "5.12.2"
 
 val snakeYamlVersion = "2.5"
 val snappyJavaVersion = "1.1.10.8"
-val httpClient5Version = "5.5"
+val httpClient5Version = "5.5.1"
 val httpClientVersion = "4.5.14" // deprecated, men brukes av
 
 plugins {
-    val kotlinVersion = "2.2.10"
+    val kotlinVersion = "2.2.21"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
-    id("org.springframework.boot") version "3.5.6"
-    id("com.github.ben-manes.versions") version "0.52.0"
+    id("org.springframework.boot") version "3.5.7"
+    id("com.github.ben-manes.versions") version "0.53.0"
 }
 
 apply(plugin = "io.spring.dependency-management")
