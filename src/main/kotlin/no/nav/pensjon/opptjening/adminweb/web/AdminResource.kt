@@ -200,8 +200,11 @@ class AdminResource(
     }
 
     fun getNavUserId(): String {
-        val subject = tokenValidationContextHolder.getTokenValidationContext().firstValidToken?.toJson()
-        log.secure.info("AdminResource: subject=$subject")
-        return subject ?: "-"
+        val token = tokenValidationContextHolder.getTokenValidationContext().firstValidToken
+        log.secure.info("AdminResource: subject=${token?.toJson()}")
+        val userName = token?.jwtTokenClaims?.getStringClaim("preferred_username")
+        val ident = token?.jwtTokenClaims?.getStringClaim("NAVident")
+        log.secure.info("AdminResource: user = $userName (ident = $ident)")
+        return token?.toJson() ?: "-"
     }
 }
