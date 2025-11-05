@@ -200,8 +200,8 @@ class AdminResource(
     }
 
     fun getNavUserId(): String {
-        val subject = tokenValidationContextHolder.getTokenValidationContext().firstValidToken?.subject
+        val subject = tokenValidationContextHolder.getTokenValidationContext().firstValidToken?.toJson()
         log.secure.info("AdminResource: subject=$subject")
-        return subject?.toJson() ?: "-"
+        return subject ?: "-"
     }
 }
