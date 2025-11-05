@@ -8,6 +8,7 @@ import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerRequest
 import no.nav.security.token.support.core.api.Protected
+import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,6 +23,7 @@ import java.time.format.DateTimeFormatter
 class AdminResource(
     private val filAdapterKlient: FilAdapterKlient,
     private val poppKlient: PoppKlient,
+    private val tokenValidationContextHolder: TokenValidationContextHolder,
 ) {
     companion object {
         private val log = NAVLog(AdminResource::class)
@@ -29,6 +31,11 @@ class AdminResource(
 
     @GetMapping("/fil/list", produces = [MediaType.TEXT_PLAIN_VALUE])
     fun listFiler(): ResponseEntity<String> {
+        try {
+            getNavUserId()
+        } catch (e: Exception) {
+            log.secure.error("Failed to get NavUserId", e)
+        }
         return try {
             val filer = filAdapterKlient.listFiler()
             val body = filer.filer.joinToString("\n") {
@@ -190,5 +197,11 @@ class AdminResource(
 
     fun gyldigFnrInput(fnr: String): Boolean {
         return fnr.matches("^[0-9]*$".toRegex())
+    }
+
+    fun getNavUserId(): String {
+        val subject = tokenValidationContextHolder.getTokenValidationContext().firstValidToken?.subject
+        log.secure.info("AdminResource: subject=$subject")
+        return subject ?: "-"
     }
 }
