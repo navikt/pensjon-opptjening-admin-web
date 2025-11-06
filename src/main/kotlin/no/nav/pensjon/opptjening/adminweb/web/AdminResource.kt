@@ -3,6 +3,7 @@ package no.nav.pensjon.opptjening.adminweb.web
 import no.nav.pensjon.opptjening.adminweb.external.FilAdapterKlient
 import no.nav.pensjon.opptjening.adminweb.external.PoppKlient
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerTilForsteRequest
+import no.nav.pensjon.opptjening.adminweb.log.AuditLogger
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentRequest
@@ -32,9 +33,12 @@ class AdminResource(
     @GetMapping("/fil/list", produces = [MediaType.TEXT_PLAIN_VALUE])
     fun listFiler(): ResponseEntity<String> {
         try {
-            getNavUserId()
+            auditLog(
+                operation = AuditLogger.Operation.READ,
+                function = "list filer"
+            )
         } catch (e: Exception) {
-            log.secure.error("Failed to get NavUserId", e)
+            log.secure.error("Failed to audit log", e)
         }
         return try {
             val filer = filAdapterKlient.listFiler()
@@ -199,12 +203,26 @@ class AdminResource(
         return fnr.matches("^[0-9]*$".toRegex())
     }
 
-    fun getNavUserId(): String {
+    private fun auditLog(
+        operation: AuditLogger.Operation,
+        fnr: String? = null,
+        function: String,
+    ) {
+        val userId = getNavUserId()
+        val cefMessage = AuditLogger.createcCefMessage(
+            fnr = fnr,
+            navUserId = userId,
+            operation = operation,
+            function = function,
+        )
+        log.audit.info(cefMessage)
+    }
+
+    private fun getNavUserId(): String {
         val token = tokenValidationContextHolder.getTokenValidationContext().firstValidToken
-        log.secure.info("AdminResource: subject=${token?.toJson()}")
         val userName = token?.jwtTokenClaims?.getStringClaim("preferred_username")
         val ident = token?.jwtTokenClaims?.getStringClaim("NAVident")
         log.secure.info("AdminResource: user = $userName (ident = $ident)")
-        return token?.toJson() ?: "-"
+        return ident ?: "-"
     }
 }
