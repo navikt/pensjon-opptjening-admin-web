@@ -32,13 +32,17 @@
             </encoder>
         </appender>
 
-        <appender name="audit" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <appender name="audit-logs" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
             <destination>audit.nais:6514</destination>
             <writeBufferSize>128000</writeBufferSize>
             <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <pattern>${HOSTNAME} pensjon-opptjening-admin-web: %msg%n</pattern>
             </encoder>
         </appender>
+
+        <logger name="audit" additivity="false">
+            <appender-ref ref="audit-logs"/>
+        </logger>
 
         <logger name="secure" additivity="false">
             <appender-ref ref="team-logs"/>
@@ -70,13 +74,17 @@
             </encoder>
         </appender>
 
-        <appender name="audit" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <appender name="audit-logs" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
             <destination>audit.nais:6514</destination>
             <writeBufferSize>128000</writeBufferSize>
             <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <pattern>${HOSTNAME} syk-dig-backend: %msg%n</pattern>
             </encoder>
         </appender>
+
+        <logger name="audit" additivity="false">
+            <appender-ref ref="team-logs"/>
+        </logger>
 
         <logger name="secure" additivity="false">
             <appender-ref ref="team-logs"/>
