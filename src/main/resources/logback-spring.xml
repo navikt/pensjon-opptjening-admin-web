@@ -78,7 +78,7 @@
             <destination>audit.nais:6514</destination>
             <writeBufferSize>128000</writeBufferSize>
             <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-                <pattern>${HOSTNAME} syk-dig-backend: %msg%n</pattern>
+                <pattern>${HOSTNAME} pensjon-opptjening-admin-web: %msg%n</pattern>
             </encoder>
         </appender>
 
