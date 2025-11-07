@@ -7,27 +7,42 @@ internal object AuditLogger {
     val log = NAVLog(AuditLogger::class)
 
     fun createcCefMessage(
-        fnr: String?,
+        fnr: String? = null,
         navUserId: String,
         operation: Operation,
         function: String,
+        navCallId: String? = null,
+        userProvidedReason: String? = null
     ): String {
         val application = "pensjon-opptjening-admin-web"
         val now = now().toInstant().toEpochMilli()
         val duidStr = fnr?.let { " duid=$it" } ?: ""
 
-//        return "CEF:0|Pensjon Opptjening|$application|0.0|${operation.logString}|Sporingslogg|INFO|end=$now$duidStr" +
-//            " suid=$navUserId request=$requestPath flexString1Label=Decision flexString1=$permit"
-        val cefMessage = "CEF:0|Pensjon Opptjening|$application|null|${operation.logString}|Sporingslogg|INFO|end=$now$duidStr" +
-                " suid=$navUserId request=$function"
+        val extensions = listOf(
+            "end=$now",
+            "suid=$navUserId",
+            fnr?.let { "duid=$it" },
+            "sproc=$function",
+            navCallId?.let { "call-id=$navCallId" },
+            userProvidedReason?.let {
+                val string = userProvidedReason.trim().replace("[^a-zA-Z0-9]".toRegex(), "_").substring(0, 50)
+                "flexString1Label=Reason flexString1=\"$string\""
+            }
+        )
+        val extensionsString = extensions.filterNotNull().joinToString { " " }
+
+        val cefMessage =
+            "CEF:0|Pensjon Opptjening|$application|1.0|${operation.logString}|Sporingslogg|INFO|$extensionsString"
+
         log.secure.info("cefMessage=$cefMessage")
         return cefMessage
     }
 
     enum class Operation(val logString: String) {
+        CREATE("audit:create"),
         READ("audit:access"),
         WRITE("audit:update"),
-        UNKNOWN("audit:unknown"),
+        DELETE("audit:delete"),
     }
 
     enum class Permit(val logString: String) {

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.UUID
 
 @RestController
 @Protected
@@ -35,7 +36,9 @@ class AdminResource(
         try {
             auditLog(
                 operation = AuditLogger.Operation.READ,
-                function = "list filer"
+                function = "list filer",
+                sporingsId = UUID.randomUUID().toString(),
+                reason = "dette,,\" er en ... test"
             )
         } catch (e: Exception) {
             log.secure.error("Failed to audit log", e)
@@ -207,16 +210,28 @@ class AdminResource(
         operation: AuditLogger.Operation,
         fnr: String? = null,
         function: String,
+        reason: String? = null,
+        sporingsId: String? = null,
     ) {
         val userId = getNavUserId()
-        val cefMessage = AuditLogger.createcCefMessage(
+        val cefMessage1 = AuditLogger.createcCefMessage(
             fnr = fnr,
             navUserId = userId,
             operation = operation,
             function = function,
         )
-        log.secure.info("Audit logged: $cefMessage")
-        log.audit.info(cefMessage)
+        val cefMessage2 = AuditLogger.createcCefMessage(
+            fnr = fnr,
+            navUserId = userId,
+            operation = operation,
+            function = function,
+            navCallId = sporingsId,
+            userProvidedReason = reason,
+        )
+        log.secure.info("Audit logged(1): $cefMessage1")
+        log.audit.info(cefMessage1)
+        log.secure.info("Audit logged(2): $cefMessage2")
+        log.audit.info(cefMessage2)
     }
 
     private fun getNavUserId(): String {
