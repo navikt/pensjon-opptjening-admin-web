@@ -215,6 +215,7 @@ class AdminResource(
             operation = operation,
             function = function,
         )
+        log.secure.info("Audit logged: $cefMessage")
         log.audit.info(cefMessage)
     }
 
