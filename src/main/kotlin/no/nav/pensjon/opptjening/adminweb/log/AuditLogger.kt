@@ -28,9 +28,9 @@ internal object AuditLogger {
                 val toLongExt = if (userProvidedReason.length > 50) "..." else ""
                 val string = userProvidedReason.trim().replace("[^a-zA-Z0-9]".toRegex(), "_").take(50)
                 "flexString1Label=Reason flexString1=\"$string$toLongExt\""
-            }
+            },
         )
-        val extensionsString = extensions.filterNotNull().joinToString { " " }
+        val extensionsString = extensions.filterNotNull().joinToString(" ")
 
         val cefMessage =
             "CEF:0|Pensjon Opptjening|$application|1.0|${operation.logString}|Sporingslogg|INFO|$extensionsString"
