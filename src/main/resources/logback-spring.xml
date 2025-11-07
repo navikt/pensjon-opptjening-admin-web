@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <configuration debug="true"/>
+<configuration debug="true">
     <springProfile name="dev-gcp">
         <appender name="stdout_json" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
@@ -84,7 +83,7 @@
         </appender>
 
         <logger name="audit" additivity="false">
-            <appender-ref ref="team-logs"/>
+            <appender-ref ref="audit-logs"/>
         </logger>
 
         <logger name="secure" additivity="false">
