@@ -25,8 +25,9 @@ internal object AuditLogger {
             "sproc=$function",
             navCallId?.let { "call-id=$navCallId" },
             userProvidedReason?.let {
-                val string = userProvidedReason.trim().replace("[^a-zA-Z0-9]".toRegex(), "_").substring(0, 50)
-                "flexString1Label=Reason flexString1=\"$string\""
+                val toLongExt = if (userProvidedReason.length > 50) "..." else ""
+                val string = userProvidedReason.trim().replace("[^a-zA-Z0-9]".toRegex(), "_").take(50)
+                "flexString1Label=Reason flexString1=\"$string$toLongExt\""
             }
         )
         val extensionsString = extensions.filterNotNull().joinToString { " " }
