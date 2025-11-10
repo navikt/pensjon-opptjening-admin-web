@@ -39,8 +39,6 @@ internal object AuditLogger {
 
         val cefMessage =
             "CEF:0|Pensjon Opptjening|$application|1.0|${operation.logString}|Sporingslogg|INFO|$extensionsString"
-
-        log.secure.info("cefMessage=$cefMessage")
         return cefMessage
     }
 
@@ -49,10 +47,5 @@ internal object AuditLogger {
         READ("audit:access"),
         WRITE("audit:update"),
         DELETE("audit:delete"),
-    }
-
-    enum class Permit(val logString: String) {
-        PERMIT("Permit"),
-        DENY("Deny"),
     }
 }
