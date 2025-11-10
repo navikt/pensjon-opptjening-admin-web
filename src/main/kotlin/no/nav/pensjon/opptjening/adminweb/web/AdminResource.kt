@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.UUID
 
 @RestController
 @Protected
@@ -33,16 +32,10 @@ class AdminResource(
 
     @GetMapping("/fil/list", produces = [MediaType.TEXT_PLAIN_VALUE])
     fun listFiler(): ResponseEntity<String> {
-        try {
-            auditLog(
-                operation = AuditLogger.Operation.READ,
-                function = "list filer",
-                sporingsId = UUID.randomUUID().toString(),
-                reason = "dette,,\" er en ... test"
-            )
-        } catch (e: Exception) {
-            log.secure.error("Failed to audit log", e)
-        }
+        auditLog(
+            operation = AuditLogger.Operation.READ,
+            function = "list filer",
+        )
         return try {
             val filer = filAdapterKlient.listFiler()
             val body = filer.filer.joinToString("\n") {
@@ -64,7 +57,14 @@ class AdminResource(
     @PostMapping("/fil/overfor")
     fun overforFil(
         @RequestParam("filnavn") filnavn: String,
+        @RequestParam("begrunnelse") begrunnelse: String?,
     ): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogger.Operation.WRITE,
+            function = "overfør fil",
+            begrunnelse = "$begrunnelse",
+            informasjon = filnavn,
+        )
         return try {
             ResponseEntity.ok(filAdapterKlient.overførFil(filnavn))
         } catch (e: Throwable) {
@@ -77,7 +77,14 @@ class AdminResource(
     @PostMapping("/behandling")
     fun behandling(
         @RequestParam("request") request: String,
+        @RequestParam("begrunnelse") begrunnelse: String?,
     ): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogger.Operation.WRITE,
+            function = "bestill behandling",
+            informasjon = request,
+            begrunnelse = begrunnelse,
+        )
         return try {
             ResponseEntity.ok(poppKlient.bestillBehandling(request))
         } catch (e: Throwable) {
@@ -90,7 +97,14 @@ class AdminResource(
     @PostMapping("/behandling/gjenoppta")
     fun rekjørBehandling(
         @RequestParam("behandlingId") behandlingId: String,
+        @RequestParam("begrunnelse") begrunnelse: String?,
     ): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogger.Operation.WRITE,
+            function = "bestill behandling",
+            informasjon = behandlingId,
+            begrunnelse = begrunnelse,
+        )
         return try {
             ResponseEntity.ok(poppKlient.gjenopptaBehandling(behandlingId))
         } catch (e: Throwable) {
@@ -102,6 +116,10 @@ class AdminResource(
 
     @GetMapping("/pgi/status")
     fun pgiStatus(): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogger.Operation.READ,
+            function = "pgi status",
+        )
         return try {
             ResponseEntity.ok(poppKlient.hentPgiInnlesingStatus().toJson())
         } catch (t: Throwable) {
@@ -114,7 +132,14 @@ class AdminResource(
     @PostMapping("/pgi/sett-sekvensnummer")
     fun pgiSettSekvensnummer(
         @RequestParam dato: String,
+        @RequestParam begrunnelse: String,
     ): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogger.Operation.WRITE,
+            function = "pgi sett sekvensnummer",
+            begrunnelse = begrunnelse,
+            informasjon = dato,
+        )
         val dato = if (dato == "") null else dato
         return try {
             if (dato != null && !gyldigIsoDato(dato)) {
@@ -139,7 +164,13 @@ class AdminResource(
 
     @PostMapping("/pgi/sett-sekvensnummer-til-forste")
     fun pgiSettSekvensnummerTilForste(
+        @RequestParam begrunnelse: String,
     ): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogger.Operation.WRITE,
+            function = "pgi sett sekvensnummer forste",
+            begrunnelse = begrunnelse,
+        )
         return try {
             val response = poppKlient.settSekvensnummer(
                 PgiInnlesingSettSekvensnummerTilForsteRequest(
@@ -166,7 +197,15 @@ class AdminResource(
     fun pgiSynkroniserPerson(
         @RequestParam("fnr") fnr: String,
         @RequestParam("ar") ar: Int,
+        @RequestParam begrunnelse: String,
     ): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogger.Operation.WRITE,
+            function = "pgi synkroniser person",
+            informasjon = ar.toString(),
+            begrunnelse = begrunnelse,
+            fnr = fnr,
+        )
         return try {
             if (!gyldigFnrInput(fnr)) {
                 log.open.warn("synkroniser-person: ugyldige tegn i fnr")
@@ -186,6 +225,10 @@ class AdminResource(
 
     @GetMapping("/pgi/list-feilede")
     fun pgiListFeilede(): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogger.Operation.READ,
+            function = "pgi list feilede",
+        )
         return try {
             ResponseEntity.ok(poppKlient.hentFeiledePgi().toJson())
         } catch (t: Throwable) {
@@ -210,28 +253,22 @@ class AdminResource(
         operation: AuditLogger.Operation,
         fnr: String? = null,
         function: String,
-        reason: String? = null,
+        begrunnelse: String? = null,
+        informasjon: String? = null,
         sporingsId: String? = null,
     ) {
         val userId = getNavUserId()
-        val cefMessage1 = AuditLogger.createcCefMessage(
-            fnr = fnr,
-            navUserId = userId,
-            operation = operation,
-            function = function,
-        )
-        val cefMessage2 = AuditLogger.createcCefMessage(
+        val cefMessage = AuditLogger.createcCefMessage(
             fnr = fnr,
             navUserId = userId,
             operation = operation,
             function = function,
             navCallId = sporingsId,
-            userProvidedReason = reason,
+            userProvidedReason = begrunnelse,
+            informasjon = informasjon,
         )
-        log.secure.info("Audit logged(1): $cefMessage1")
-        log.audit.info(cefMessage1)
-        log.secure.info("Audit logged(2): $cefMessage2")
-        log.audit.info(cefMessage2)
+        log.secure.info("AUDIT LOG: $cefMessage")
+        log.audit.info(cefMessage)
     }
 
     private fun getNavUserId(): String {
