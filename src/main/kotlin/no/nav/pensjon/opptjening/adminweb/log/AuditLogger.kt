@@ -26,12 +26,12 @@ internal object AuditLogger {
             navCallId?.let { "call-id=$navCallId" },
             userProvidedReason?.let {
                 val toLongExt = if (userProvidedReason.length > 500) "..." else ""
-                val string = userProvidedReason.trim().replace("[^a-zA-Z0-9_,.-]".toRegex(), "?").take(500)
+                val string = userProvidedReason.trim().replace("[^ a-zA-Z0-9_,.-]".toRegex(), "?").take(500)
                 "flexString1Label=Reason flexString1=\"$string$toLongExt\""
             },
             informasjon?.let {
                 val toLongExt = if (informasjon.length > 500) "..." else ""
-                val string = informasjon.trim().replace("[^a-zA-Z0-9_,.-]".toRegex(), "?").take(500)
+                val string = informasjon.trim().replace("[^ a-zA-Z0-9_,.-]".toRegex(), "?").take(500)
                 "flexString2Label=Informasjon flexString2=\"$string$toLongExt\""
             },
         )

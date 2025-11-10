@@ -57,7 +57,7 @@ class AdminResource(
     @PostMapping("/fil/overfor")
     fun overforFil(
         @RequestParam("filnavn") filnavn: String,
-        @RequestParam("begrunnelse") begrunnelse: String?,
+        @RequestParam("begrunnelse") begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
             operation = AuditLogger.Operation.WRITE,
