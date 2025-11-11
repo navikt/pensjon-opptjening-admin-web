@@ -4,6 +4,8 @@ import no.nav.pensjon.opptjening.adminweb.external.dto.ListFilerResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.OverforFilRequest
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
+import org.apache.hc.core5.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.web.client.RestClient
@@ -43,7 +45,8 @@ class FilAdapterKlient(
             restClient
                 .post()
                 .uri("/overfor")
-                .body(OverforFilRequest(filnavn).toJson())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(OverforFilRequest(filnavn))
                 .retrieve()
                 .body<String>()!!
         } catch (e: Throwable) {

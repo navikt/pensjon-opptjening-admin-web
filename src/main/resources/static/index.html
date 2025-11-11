@@ -154,6 +154,14 @@
         </tr>
         <tr>
             <td>
+                <label for="begrunnelse0">begrunnelse</label>
+            </td>
+            <td>
+                <input type="text" name="begrunnelse" id="begrunnelse0" size="500">
+            </td>
+        </tr>
+        <tr>
+            <td>
             </td>
             <td>
                 <input type="submit" name="overfør" value="Overfør fil">
@@ -180,6 +188,14 @@
         </tr>
         <tr>
             <td>
+                <label for="begrunnelse">begrunnelse</label>
+            </td>
+            <td>
+                <input type="text" name="begrunnelse" size="500">
+            </td>
+        </tr>
+        <tr>
+            <td>
             </td>
             <td>
                 <input type="submit" name="bestill" value="Bestill behandling">
@@ -198,6 +214,14 @@
             </td>
             <td>
                 <input type="text" name="behandlingId" id="behandlingId" size="100">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="begrunnelse">begrunnelse</label>
+            </td>
+            <td>
+                <input type="text" name="begrunnelse" size="500">
             </td>
         </tr>
         <tr>
@@ -245,14 +269,24 @@
         <tbody>
         <tr>
             <td>
+                <label for="dato1">
+                    Dato (yyyy-mm-dd):
+                </label>
             </td>
             <td>
-                <label>
-                    Dato (yyyy-mm-dd):
-                    <input type="text" name="dato"/>
-                </label>
-                <input type="submit" name="submit" value="Sett sekvensnummer">
+                <input type="text" name="dato" id="dato1"/>
             </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="begrunnelse1">begrunnelse</label>
+            </td>
+            <td>
+                <input type="text" name="begrunnelse" id="begrunnelse1" size="500">
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" name="submit" value="Sett sekvensnummer"></td>
         </tr>
         </tbody>
     </table>
@@ -262,11 +296,18 @@
     <table>
         <tbody>
         <tr>
+        </tr>
+        <tr>
             <td>
+                <label for="begrunnelse2">begrunnelse</label>
             </td>
             <td>
-                <input type="submit" name="submit" value="Sett sekvensnummer til første">
+                <input type="text" name="begrunnelse" id="begrunnelse2" size="500">
             </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" name="submit" value="Sett sekvensnummer til første"></td>
         </tr>
         </tbody>
     </table>
@@ -282,18 +323,29 @@
             <tbody>
             <tr>
                 <td>
+                    <label for="fnr2">FNR:</label>
                 </td>
                 <td>
-                    <label>
-                        FNR:
-                        <input type="text" class="fnr" name="fnr"/>
-                    </label>
-                    <label>
-                        År:
-                        <input type="number" class="år" name="ar"/>
-                    </label>
-                    <input type="submit" name="pgi-status" value="Synkroniser person">
+                    <input type="text" size=11" class="fnr" id="fnr2" name="fnr"/>
                 </td>
+            <tr>
+                <td>
+                    <label for="ar1">År:</label>
+                </td>
+                <td>
+                    <input type="text" size="4" class="år" id="ar1" name="ar"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="begrunnelse3">begrunnelse</label>
+                </td>
+                <td>
+                    <input type="text" name="begrunnelse" id="begrunnelse3" size="500">
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="pgi-status" value="Synkroniser person"></td>
             </tr>
             </tbody>
         </table>
@@ -305,7 +357,13 @@
             <tbody>
             <tr>
                 <td>
+                    <label for="begrunnelse4">begrunnelse</label>
                 </td>
+                <td>
+                    <input type="text" name="begrunnelse" id="begrunnelse4" size="500">
+                </td>
+            </tr>
+            <tr>
                 <td>
                     <input type="submit" name="pgi-rekjor" value="Rekjør feilede">
                 </td>

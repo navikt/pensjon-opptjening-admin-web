@@ -25,13 +25,27 @@
             <destination>team-logs.nais-system:5170</destination>
             <encoder class="net.logstash.logback.encoder.LogstashEncoder">
                 <includeCallerData>true</includeCallerData>
-                <customFields>{"google_cloud_project":"${GOOGLE_CLOUD_PROJECT}","nais_namespace_name":"${NAIS_NAMESPACE}","nais_pod_name":"${HOSTNAME}","nais_container_name":"${NAIS_APP_NAME}"}</customFields>
+                <customFields>
+                    {"google_cloud_project":"${GOOGLE_CLOUD_PROJECT}","nais_namespace_name":"${NAIS_NAMESPACE}","nais_pod_name":"${HOSTNAME}","nais_container_name":"${NAIS_APP_NAME}"}
+                </customFields>
                 <includeContext>false</includeContext>
             </encoder>
         </appender>
 
+        <appender name="audit-logs" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>audit.nais:6514</destination>
+            <writeBufferSize>128000</writeBufferSize>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${HOSTNAME} pensjon-opptjening-admin-web: %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <logger name="audit" additivity="false">
+            <appender-ref ref="audit-logs"/>
+        </logger>
+
         <logger name="secure" additivity="false">
-            <appender-ref ref="team-logs" />
+            <appender-ref ref="team-logs"/>
         </logger>
     </springProfile>
 
@@ -53,13 +67,27 @@
             <destination>team-logs.nais-system:5170</destination>
             <encoder class="net.logstash.logback.encoder.LogstashEncoder">
                 <includeCallerData>true</includeCallerData>
-                <customFields>{"google_cloud_project":"${GOOGLE_CLOUD_PROJECT}","nais_namespace_name":"${NAIS_NAMESPACE}","nais_pod_name":"${HOSTNAME}","nais_container_name":"${NAIS_APP_NAME}"}</customFields>
+                <customFields>
+                    {"google_cloud_project":"${GOOGLE_CLOUD_PROJECT}","nais_namespace_name":"${NAIS_NAMESPACE}","nais_pod_name":"${HOSTNAME}","nais_container_name":"${NAIS_APP_NAME}"}
+                </customFields>
                 <includeContext>false</includeContext>
             </encoder>
         </appender>
 
+        <appender name="audit-logs" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>audit.nais:6514</destination>
+            <writeBufferSize>128000</writeBufferSize>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${HOSTNAME} pensjon-opptjening-admin-web: %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <logger name="audit" additivity="false">
+            <appender-ref ref="audit-logs"/>
+        </logger>
+
         <logger name="secure" additivity="false">
-            <appender-ref ref="team-logs" />
+            <appender-ref ref="team-logs"/>
         </logger>
     </springProfile>
 </configuration>
