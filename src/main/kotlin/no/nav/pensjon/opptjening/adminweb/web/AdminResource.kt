@@ -5,8 +5,8 @@ import no.nav.pensjon.opptjening.adminweb.external.PoppKlient
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerTilForsteRequest
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
-import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingHentRequest
-import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingSettSekvensnummerRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerRequest
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -33,7 +33,7 @@ class AdminResource(
             val filer = filAdapterKlient.listFiler()
             val body = filer.filer.joinToString("\n") {
                 val lagret = if (it.lagretMedId != null) " lagret med id ${it.lagretMedId}" else ""
-                val pågående = if (it.lagresMedId.size > 0) " under lagring: ${it.lagresMedId}" else ""
+                val pågående = if (it.lagresMedId.isNotEmpty()) " under lagring: ${it.lagresMedId}" else ""
                 "${it.filnavn}[${it.size}$lagret$pågående]"
             }
             ResponseEntity.ok(body)

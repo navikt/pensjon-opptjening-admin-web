@@ -1,3 +1,3 @@
-package no.nav.popp.web.api.endpoint.pgi.model
+package no.nav.pensjon.opptjening.adminweb.external.dto
 
 data class PgiInnlesingHentRequest(val fnr: String, val ar: Int)

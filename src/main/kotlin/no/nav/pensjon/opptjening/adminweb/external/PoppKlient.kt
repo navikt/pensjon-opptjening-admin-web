@@ -2,12 +2,12 @@ package no.nav.pensjon.opptjening.adminweb.external
 
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerTilForsteRequest
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
-import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingHentRequest
-import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingHentResponse
-import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingListFeiledeResponse
-import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingSettSekvensnummerRequest
-import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingSettSekvensnummerResponse
-import no.nav.popp.web.api.endpoint.pgi.model.PgiInnlesingStatusResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingListFeiledeResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingStatusResponse
 import org.apache.hc.core5.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.http.client.ClientHttpRequestInterceptor
