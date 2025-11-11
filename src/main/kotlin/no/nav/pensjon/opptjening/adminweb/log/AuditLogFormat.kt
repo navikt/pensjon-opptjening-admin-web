@@ -2,9 +2,9 @@ package no.nav.pensjon.opptjening.adminweb.log
 
 import java.time.ZonedDateTime.now
 
-internal object AuditLogger {
+internal object AuditLogFormat {
 
-    val log = NAVLog(AuditLogger::class)
+    val log = NAVLog(AuditLogFormat::class)
 
     fun createcCefMessage(
         fnr: String? = null,

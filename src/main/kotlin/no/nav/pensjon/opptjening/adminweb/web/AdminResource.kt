@@ -3,7 +3,7 @@ package no.nav.pensjon.opptjening.adminweb.web
 import no.nav.pensjon.opptjening.adminweb.external.FilAdapterKlient
 import no.nav.pensjon.opptjening.adminweb.external.PoppKlient
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerTilForsteRequest
-import no.nav.pensjon.opptjening.adminweb.log.AuditLogger
+import no.nav.pensjon.opptjening.adminweb.log.AuditLogFormat
 import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentRequest
@@ -33,7 +33,7 @@ class AdminResource(
     @GetMapping("/fil/list", produces = [MediaType.TEXT_PLAIN_VALUE])
     fun listFiler(): ResponseEntity<String> {
         auditLog(
-            operation = AuditLogger.Operation.READ,
+            operation = AuditLogFormat.Operation.READ,
             function = "list filer",
         )
         return try {
@@ -60,7 +60,7 @@ class AdminResource(
         @RequestParam("begrunnelse") begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
-            operation = AuditLogger.Operation.WRITE,
+            operation = AuditLogFormat.Operation.WRITE,
             function = "overfør fil",
             begrunnelse = "$begrunnelse",
             informasjon = filnavn,
@@ -80,7 +80,7 @@ class AdminResource(
         @RequestParam("begrunnelse") begrunnelse: String?,
     ): ResponseEntity<String> {
         auditLog(
-            operation = AuditLogger.Operation.WRITE,
+            operation = AuditLogFormat.Operation.WRITE,
             function = "bestill behandling",
             informasjon = request,
             begrunnelse = begrunnelse,
@@ -100,7 +100,7 @@ class AdminResource(
         @RequestParam("begrunnelse") begrunnelse: String?,
     ): ResponseEntity<String> {
         auditLog(
-            operation = AuditLogger.Operation.WRITE,
+            operation = AuditLogFormat.Operation.WRITE,
             function = "bestill behandling",
             informasjon = behandlingId,
             begrunnelse = begrunnelse,
@@ -117,7 +117,7 @@ class AdminResource(
     @GetMapping("/pgi/status")
     fun pgiStatus(): ResponseEntity<String> {
         auditLog(
-            operation = AuditLogger.Operation.READ,
+            operation = AuditLogFormat.Operation.READ,
             function = "pgi status",
         )
         return try {
@@ -135,7 +135,7 @@ class AdminResource(
         @RequestParam begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
-            operation = AuditLogger.Operation.WRITE,
+            operation = AuditLogFormat.Operation.WRITE,
             function = "pgi sett sekvensnummer",
             begrunnelse = begrunnelse,
             informasjon = dato,
@@ -167,7 +167,7 @@ class AdminResource(
         @RequestParam begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
-            operation = AuditLogger.Operation.WRITE,
+            operation = AuditLogFormat.Operation.WRITE,
             function = "pgi sett sekvensnummer forste",
             begrunnelse = begrunnelse,
         )
@@ -200,7 +200,7 @@ class AdminResource(
         @RequestParam begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
-            operation = AuditLogger.Operation.WRITE,
+            operation = AuditLogFormat.Operation.WRITE,
             function = "pgi synkroniser person",
             informasjon = ar.toString(),
             begrunnelse = begrunnelse,
@@ -226,7 +226,7 @@ class AdminResource(
     @GetMapping("/pgi/list-feilede")
     fun pgiListFeilede(): ResponseEntity<String> {
         auditLog(
-            operation = AuditLogger.Operation.READ,
+            operation = AuditLogFormat.Operation.READ,
             function = "pgi list feilede",
         )
         return try {
@@ -250,7 +250,7 @@ class AdminResource(
     }
 
     private fun auditLog(
-        operation: AuditLogger.Operation,
+        operation: AuditLogFormat.Operation,
         fnr: String? = null,
         function: String,
         begrunnelse: String? = null,
@@ -258,7 +258,7 @@ class AdminResource(
         sporingsId: String? = null,
     ) {
         val userId = getNavUserId()
-        val cefMessage = AuditLogger.createcCefMessage(
+        val cefMessage = AuditLogFormat.createcCefMessage(
             fnr = fnr,
             navUserId = userId,
             operation = operation,
