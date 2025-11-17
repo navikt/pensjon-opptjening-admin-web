@@ -8,6 +8,7 @@ import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensnummerRequest
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.http.MediaType
@@ -184,6 +185,31 @@ class AdminResource(
             ResponseEntity.internalServerError().body("Intern feil")
         }
     }
+
+    @PostMapping("/pgi/slett-sekvensnummer")
+    fun pgiSlettSekvensnummer(
+        @RequestParam begrunnelse: String,
+    ): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogFormat.Operation.WRITE,
+            function = "pgi sett sekvensnummer forste",
+            begrunnelse = begrunnelse,
+        )
+
+        return try {
+            val response = poppKlient.slettSekvensnummer(
+                PgiInnlesingSlettSekvensnummerRequest(
+                    slettSekvensnummer = true
+                )
+            ).toJson()
+            ResponseEntity.ok(response.toJson())
+        } catch (t: Throwable) {
+            log.open.warn("Kunne ikke slette sekvensnummer")
+            log.secure.warn("Kunne ikke slette sekvensnummer", t)
+            ResponseEntity.internalServerError().body("Intern feil")
+        }
+    }
+
 
     private fun gyldigIsoDato(dato: String): Boolean {
         return dato.matches("^\\d{4}-\\d{2}-\\d{2}$".toRegex())

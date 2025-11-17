@@ -7,6 +7,8 @@ import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingListFeiledeResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensnummerRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensnummerResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingStatusResponse
 import org.apache.hc.core5.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -77,6 +79,16 @@ class PoppKlient(
             .body(request)
             .retrieve()
             .body<PgiInnlesingSettSekvensnummerResponse>()!!
+    }
+
+    fun slettSekvensnummer(request: PgiInnlesingSlettSekvensnummerRequest): PgiInnlesingSlettSekvensnummerResponse {
+        return restClient
+            .post()
+            .uri("/pgi/sekvensnummer/slett")
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .body(request)
+            .retrieve()
+            .body<PgiInnlesingSlettSekvensnummerResponse>()!!
     }
 
     fun hentPgiForPersonOgÅr(request: PgiInnlesingHentRequest): PgiInnlesingHentResponse {
