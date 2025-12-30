@@ -7,6 +7,7 @@ import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingListFeiledeResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerStatusRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensnummerRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensnummerResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingStatusResponse
@@ -112,6 +113,21 @@ class PoppKlient(
         } catch (t: Throwable) {
             log.secure.warn("kunne ikke hente status for PGI-innelsing", t)
             throw PoppKlientException("Kunne ikke hente status for PGI-innlesing", t)
+        }
+    }
+
+    fun settPgiSekvensnummerStatus(request: PgiInnlesingSettSekvensnummerStatusRequest): PgiInnlesingStatusResponse {
+        try {
+            return restClient
+                .post()
+                .uri("/pgi/sekvensnummer/oppdater-status")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .retrieve()
+                .body<PgiInnlesingStatusResponse>()!!
+        } catch (t: Throwable) {
+            log.secure.warn("kunne ikke sette status for PGI-sekvensnummer", t)
+            throw PoppKlientException("kunne ikke sette status for PGI-sekvensnummer", t)
         }
     }
 

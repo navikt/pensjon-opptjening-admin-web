@@ -8,7 +8,9 @@ import no.nav.pensjon.opptjening.adminweb.log.NAVLog
 import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerStatusRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensnummerRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.SekvensnummerStatus
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.http.MediaType
@@ -260,6 +262,37 @@ class AdminResource(
         } catch (t: Throwable) {
             log.open.warn("Kunne ikke liste feilede")
             log.secure.warn("Kunne ikke liste feilede", t)
+            ResponseEntity.internalServerError().body("Intern feil")
+        }
+    }
+
+    @PostMapping("/pgi/sett-sekvensnummer-status")
+    fun pgiSettStatus(
+        @RequestParam pause: Boolean,
+        @RequestParam begrunnelse: String,
+    ): ResponseEntity<String> {
+        auditLog(
+            operation = AuditLogFormat.Operation.WRITE,
+            function = "pgi sett status",
+            informasjon = "pause=$pause",
+            begrunnelse = begrunnelse,
+        )
+        return try {
+            val status =
+                poppKlient.settPgiSekvensnummerStatus(
+                    PgiInnlesingSettSekvensnummerStatusRequest(
+                        status =
+                            if (pause) {
+                                SekvensnummerStatus.PAUSET
+                            } else {
+                                SekvensnummerStatus.AKTIV
+                            }
+                    )
+                ).toJson()
+            return ResponseEntity.ok(status.toJson())
+        } catch (t: Throwable) {
+            log.open.warn("PGI: Kunne ikke sette status")
+            log.secure.warn("PGI: Kunne ikke sette status", t)
             ResponseEntity.internalServerError().body("Intern feil")
         }
     }
