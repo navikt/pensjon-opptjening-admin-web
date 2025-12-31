@@ -5,5 +5,6 @@ data class PgiInnlesingStatusResponse(
 ) {
     data class PgiSekvensnummerStatus(
         val sekvensnummer: Long?,
+        val aktiv: Boolean?,
     )
 }
