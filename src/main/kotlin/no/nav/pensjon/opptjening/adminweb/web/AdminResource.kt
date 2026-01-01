@@ -134,8 +134,8 @@ class AdminResource(
 
     @PostMapping("/pgi/sett-sekvensnummer")
     fun pgiSettSekvensnummer(
-        @RequestParam dato: String,
-        @RequestParam begrunnelse: String,
+        @RequestParam("dato") dato: String,
+        @RequestParam("begrunnelse") begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
             operation = AuditLogFormat.Operation.WRITE,
@@ -167,7 +167,7 @@ class AdminResource(
 
     @PostMapping("/pgi/sett-sekvensnummer-til-forste")
     fun pgiSettSekvensnummerTilForste(
-        @RequestParam begrunnelse: String,
+        @RequestParam("begrunnelse") begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
             operation = AuditLogFormat.Operation.WRITE,
@@ -190,7 +190,7 @@ class AdminResource(
 
     @PostMapping("/pgi/slett-sekvensnummer")
     fun pgiSlettSekvensnummer(
-        @RequestParam begrunnelse: String,
+        @RequestParam("begrunnelse") begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
             operation = AuditLogFormat.Operation.WRITE,
@@ -225,7 +225,7 @@ class AdminResource(
     fun pgiSynkroniserPerson(
         @RequestParam("fnr") fnr: String,
         @RequestParam("ar") ar: Int,
-        @RequestParam begrunnelse: String,
+        @RequestParam("begrunnelse") begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
             operation = AuditLogFormat.Operation.WRITE,
@@ -268,25 +268,25 @@ class AdminResource(
 
     @PostMapping("/pgi/sett-sekvensnummer-status")
     fun pgiSettStatus(
-        @RequestParam pause: Boolean,
-        @RequestParam begrunnelse: String,
+        @RequestParam("tilstand") tilstand: String,
+        @RequestParam("begrunnelse") begrunnelse: String,
     ): ResponseEntity<String> {
         auditLog(
             operation = AuditLogFormat.Operation.WRITE,
             function = "pgi sett status",
-            informasjon = "pause=$pause",
+            informasjon = "tilstand=$tilstand",
             begrunnelse = begrunnelse,
         )
+
         return try {
             val status =
                 poppKlient.settPgiSekvensnummerStatus(
                     PgiInnlesingSettSekvensnummerStatusRequest(
-                        status =
-                            if (pause) {
-                                SekvensnummerStatus.PAUSET
-                            } else {
-                                SekvensnummerStatus.AKTIV
-                            }
+                        status = when (tilstand) {
+                            "aktiv" -> SekvensnummerStatus.AKTIV
+                            "pauset" -> SekvensnummerStatus.PAUSET
+                            else -> throw RuntimeException("Ugyldig tilstand: $tilstand")
+                        }
                     )
                 ).toJson()
             return ResponseEntity.ok(status.toJson())

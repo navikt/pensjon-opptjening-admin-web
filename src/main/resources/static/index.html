@@ -340,18 +340,22 @@
         <tbody>
         <tr>
             <td>
-                <label for="begrunnelse7">begrunnelse</label>
+                <label for="pgi-pause-value">Tilstand</label>
             </td>
             <td>
-                <input type="text" name="begrunnelse" id="begrunnelse7" size="500">
+                <select id="pgi-pause-value" name="tilstand">
+                    <option value="pauset">pauset</option>
+                    <option value="aktiv">aktiv</option>
+                </select>
+                <input type="checkbox" name="pause" id="pgi-pause">
             </td>
         </tr>
         <tr>
             <td>
-                <label for="pgi-pause">Pause</label>
+                <label for="begrunnelse7">begrunnelse</label>
             </td>
             <td>
-                <input type="checkbox" name="pause" id="pgi-pause">
+                <input type="text" name="begrunnelse" id="begrunnelse7" size="500">
             </td>
         </tr>
         <tr>
