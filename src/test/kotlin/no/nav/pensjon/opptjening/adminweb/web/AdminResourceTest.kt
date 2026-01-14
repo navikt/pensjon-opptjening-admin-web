@@ -1,6 +1,10 @@
 package no.nav.pensjon.opptjening.adminweb.web
 
 import no.nav.pensjon.opptjening.adminweb.Application
+import no.nav.pensjon.opptjening.adminweb.external.FilAdapterKlient
+import no.nav.pensjon.opptjening.adminweb.external.PoppKlient
+import no.nav.pensjon.opptjening.adminweb.external.dto.FilStatusResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiStatusResponse
 import no.nav.pensjon.opptjening.adminweb.web.common.TestTokenIssuer
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import org.junit.jupiter.api.Test
@@ -9,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpHeaders.AUTHORIZATION
-import org.springframework.http.ResponseEntity
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest(classes = [Application::class])
@@ -27,7 +31,10 @@ class AdminResourceTest {
     private lateinit var tokenIssuer: TestTokenIssuer
 
     @MockitoBean
-    private lateinit var adminResource: AdminResource
+    private lateinit var filAdapterKlient: FilAdapterKlient
+
+    @MockitoBean
+    private lateinit var poppKlient: PoppKlient
 
     @Test
     fun `rejects request without token`() {
@@ -36,9 +43,25 @@ class AdminResourceTest {
 
     @Test
     fun `accepts request with valid token`() {
-        whenever(adminResource.listFiler()).thenReturn(ResponseEntity.ok().body("success"))
+        whenever(filAdapterKlient.listFiler()).thenReturn(FilStatusResponse.ListOk(emptyList()))
 
         mvc.perform(MockMvcRequestBuilders.get("/fil/list").header(AUTHORIZATION, tokenIssuer.bearerToken("azure")))
             .andExpect(status().isOk)
+    }
+
+    @Test
+    fun `returns PGI status as structured JSON`() {
+        val statusResponse = PgiStatusResponse.StatusOk(
+            sekvensnummer = PgiStatusResponse.StatusOk.PgiSekvensnummerStatus(
+                sekvensnummer = 123L,
+                aktiv = true
+            )
+        )
+        whenever(poppKlient.hentPgiInnlesingStatus()).thenReturn(statusResponse)
+
+        mvc.perform(MockMvcRequestBuilders.get("/pgi/status").header(AUTHORIZATION, tokenIssuer.bearerToken("azure")))
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.sekvensnummer.sekvensnummer").value(123))
+            .andExpect(jsonPath("$.sekvensnummer.aktiv").value(true))
     }
 }

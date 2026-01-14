@@ -1,17 +1,15 @@
 package no.nav.pensjon.opptjening.adminweb.external
 
-import no.nav.pensjon.opptjening.adminweb.external.dto.ListFilerResponse
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
+import no.nav.pensjon.opptjening.adminweb.external.dto.FilStatusResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.OverforFilRequest
-import no.nav.pensjon.opptjening.adminweb.log.NAVLog
-import no.nav.pensjon.opptjening.adminweb.utils.JsonUtils.toJson
-import org.apache.hc.core5.http.HttpHeaders
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
-import kotlin.time.Duration.Companion.seconds
-import kotlin.time.toJavaDuration
 
 class FilAdapterKlient(
     baseUrl: String,
@@ -24,31 +22,29 @@ class FilAdapterKlient(
         .requestInterceptor(oboTokenInterceptor)
         .build()
 ) {
-    companion object {
-        private val log = NAVLog(FilAdapterKlient::class)
-    }
 
-    fun listFiler(): ListFilerResponse {
+    fun listFiler(): FilStatusResponse.ListOk {
         return try {
             restClient
                 .get()
                 .uri("/list")
                 .retrieve()
-                .body<ListFilerResponse>()!!
+                .body<FilStatusResponse.ListOk>()!!
         } catch (e: Throwable) {
             throw FilAdapterException("Feil ved kall til filadapter", e)
         }
     }
 
-    fun overførFil(filnavn: String): String {
+    fun overførFil(filnavn: String): FilStatusResponse.OverforOk {
         return try {
-            restClient
+            val response = restClient
                 .post()
                 .uri("/overfor")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(OverforFilRequest(filnavn))
                 .retrieve()
                 .body<String>()!!
+            FilStatusResponse.OverforOk(response)
         } catch (e: Throwable) {
             throw FilAdapterException("Feil ved kall til filadapter", e)
         }
