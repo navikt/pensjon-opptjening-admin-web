@@ -66,12 +66,12 @@ class OnBehalfOfTokenIntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION, initialToken)
         )
             .andExpect(status().isOk)
-            .andExpect(content().string("""location"""))
+            .andExpect(content().string("""{"result":"location"}"""))
 
         wiremock.allServeEvents.first().also { event ->
             assertThat(event.request.absoluteUrl).isEqualTo("""${wiremock.baseUrl()}/behandling""")
             assertThat(event.request.getHeader(HttpHeaders.AUTHORIZATION)).isNotNull().also {
-                JwtToken(event.request.getHeader(HttpHeaders.AUTHORIZATION).replace("Bearer ","")).also {
+                JwtToken(event.request.getHeader(HttpHeaders.AUTHORIZATION).replace("Bearer ", "")).also {
                     assertThat(it.encodedToken).isNotEqualTo(initialToken.replace("Bearer ", ""))
                     assertThat(it.jwtClaimsSet.audience.single()).isEqualTo("api://cluster.namespace.other-api-app-name/.default")
                     assertThat(it.subject).isEqualTo("person")

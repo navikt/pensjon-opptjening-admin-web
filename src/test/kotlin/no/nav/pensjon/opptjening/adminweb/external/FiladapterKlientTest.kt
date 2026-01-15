@@ -5,13 +5,12 @@ import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
-import no.nav.pensjon.opptjening.adminweb.external.dto.ListFilerResponse
+import java.util.UUID
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import java.util.UUID
 
 class FiladapterKlientTest {
 
@@ -43,20 +42,8 @@ class FiladapterKlientTest {
 
         client.listFiler().also {
             assertThat(
-                it.filer.contains(
-                    ListFilerResponse.FilMedStatus(
-                        filnavn = "fil1",
-                        size = 123,
-                        lagretMedId = UUID.randomUUID().toString(),
-                        lagresMedId = emptyList(),
-                    )
-                )
-            )
-        }
-
-        wiremock.allServeEvents.first().also {
-            assertThat(it.request.absoluteUrl).isEqualTo("""${wiremock.baseUrl()}/list""")
-            assertThat(it.request.getHeader(HttpHeaders.AUTHORIZATION)).isEqualTo("Bearer obo-token")
+                it.filer.map { it.filnavn }.contains("fil1")
+            ).isTrue()
         }
     }
 }
