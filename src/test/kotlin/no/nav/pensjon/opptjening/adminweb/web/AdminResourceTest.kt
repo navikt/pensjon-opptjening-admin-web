@@ -59,7 +59,7 @@ class AdminResourceTest {
         )
         whenever(poppKlient.hentPgiInnlesingStatus()).thenReturn(statusResponse)
 
-        mvc.perform(MockMvcRequestBuilders.get("/pgi/status").header(AUTHORIZATION, tokenIssuer.bearerToken("azure")))
+        mvc.perform(MockMvcRequestBuilders.get("/pgi-innlesing/status").header(AUTHORIZATION, tokenIssuer.bearerToken("azure")))
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.sekvensnummer.sekvensnummer").value(123))
             .andExpect(jsonPath("$.sekvensnummer.aktiv").value(true))

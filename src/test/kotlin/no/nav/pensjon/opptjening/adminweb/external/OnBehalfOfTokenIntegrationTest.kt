@@ -60,7 +60,7 @@ class OnBehalfOfTokenIntegrationTest {
         )
 
         mvc.perform(
-            MockMvcRequestBuilders.post("/behandling")
+            MockMvcRequestBuilders.post("/behandling/bestill")
                 .param("request", "whatever")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header(HttpHeaders.AUTHORIZATION, initialToken)
