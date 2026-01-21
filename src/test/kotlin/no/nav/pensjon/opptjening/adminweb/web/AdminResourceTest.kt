@@ -4,7 +4,7 @@ import no.nav.pensjon.opptjening.adminweb.Application
 import no.nav.pensjon.opptjening.adminweb.external.FilAdapterKlient
 import no.nav.pensjon.opptjening.adminweb.external.PoppKlient
 import no.nav.pensjon.opptjening.adminweb.external.dto.FilStatusResponse
-import no.nav.pensjon.opptjening.adminweb.external.dto.PgiStatusResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingResponse
 import no.nav.pensjon.opptjening.adminweb.web.common.TestTokenIssuer
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import org.junit.jupiter.api.Test
@@ -51,8 +51,8 @@ class AdminResourceTest {
 
     @Test
     fun `returns PGI status as structured JSON`() {
-        val statusResponse = PgiStatusResponse.StatusOk(
-            sekvensnummer = PgiStatusResponse.StatusOk.PgiSekvensnummerStatus(
+        val statusResponse = PgiInnlesingResponse.Status(
+            sekvensnummer = PgiInnlesingResponse.Status.PgiSekvensnummerStatus(
                 sekvensnummer = 123L,
                 aktiv = true
             )

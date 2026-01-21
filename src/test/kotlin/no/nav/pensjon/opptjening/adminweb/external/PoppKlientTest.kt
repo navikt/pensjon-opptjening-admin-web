@@ -7,7 +7,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
 import no.nav.pensjon.opptjening.adminweb.external.dto.BehandlingStatusResponse
-import no.nav.pensjon.opptjening.adminweb.external.dto.PgiStatusResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -73,8 +73,8 @@ class PoppKlientTest {
         val response = client.hentPgiInnlesingStatus()
 
         assertThat(response).isEqualTo(
-            PgiStatusResponse.StatusOk(
-                sekvensnummer = PgiStatusResponse.StatusOk.PgiSekvensnummerStatus(
+            PgiInnlesingResponse.Status(
+                sekvensnummer = PgiInnlesingResponse.Status.PgiSekvensnummerStatus(
                     sekvensnummer = 123L,
                     aktiv = true
                 )

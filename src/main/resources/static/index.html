@@ -171,6 +171,8 @@
     </table>
 </form>
 
+<!-- ##################################### Behandling ################################ -->
+
 <div class="section-header">
     Behandling
 </div>
@@ -235,6 +237,7 @@
     </table>
 </form>
 
+<!-- ##################################### PGI-Innlesing ################################ -->
 <div class="section-header">
     PGI - Innlesing
 </div>
@@ -292,7 +295,8 @@
     </table>
 </form>
 
-<form id="pgi-innlesing:sett-sekvensnummer-til-forste" action="/pgi-innlesing/sett-sekvensnummer-til-forste" method="post">
+<form id="pgi-innlesing:sett-sekvensnummer-til-forste" action="/pgi-innlesing/sett-sekvensnummer-til-forste"
+      method="post">
     <table>
         <tbody>
         <tr>
@@ -340,14 +344,13 @@
         <tbody>
         <tr>
             <td>
-                <label for="pgi-pause-value">Tilstand</label>
+                <label for="pgi-innlesing-status-value">Tilstand</label>
             </td>
             <td>
-                <select id="pgi-pause-value" name="tilstand">
+                <select id="pgi-innlesing-status-value" name="tilstand">
                     <option value="pauset">pauset</option>
                     <option value="aktiv">aktiv</option>
                 </select>
-                <input type="checkbox" name="pause" id="pgi-pause">
             </td>
         </tr>
         <tr>
@@ -369,6 +372,8 @@
     </table>
 </form>
 
+<!-- ##################################### PGI-Synkronisering ################################ -->
+
 <div class="section-header">
     PGI - Synkronisering
 </div>
@@ -385,6 +390,90 @@
     </table>
 </form>
 
+<form id="pgi-synkronisering:sett-til-forste" action="/pgi-synkronisering/sett-id-til-forste" method="post">
+    <table>
+        <tbody>
+        <tr>
+        </tr>
+        <tr>
+            <td>
+                <label for="begrunnelse9">begrunnelse</label>
+            </td>
+            <td>
+                <input type="text" name="begrunnelse" id="begrunnelse9" size="500">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" name="submit" value="Sett syncId til første"></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<form id="pgi-synkronisering:sett-sekvensnummer" action="/pgi-synkronisering/sett-id" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label for="syncId1">
+                    SyncId (id fra rådata-tabell):
+                </label>
+            </td>
+            <td>
+                <input type="text" name="syncId" id="syncId1"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="begrunnelse10">begrunnelse</label>
+            </td>
+            <td>
+                <input type="text" name="begrunnelse" id="begrunnelse10" size="500">
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" name="submit" value="Sett syncId"></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+
+<form id="pgi-synkronisering:sett-status" action="/pgi-synkronisering/sett-status" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label for="pgi-synkronisering-status-value">Tilstand</label>
+            </td>
+            <td>
+                <select id="pgi-synkronisering-status-value" name="tilstand">
+                    <option value="pauset">pauset</option>
+                    <option value="aktiv">aktiv</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="begrunnelse7">begrunnelse</label>
+            </td>
+            <td>
+                <input type="text" name="begrunnelse" id="begrunnelse7" size="500">
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="submit" name="submit" value="Sett status for sekvensnummer">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<!--  ################################# UFERDIG FUNKSJONALITET ################################ -->
 
 <div class="prerelease">
     <div class="info">

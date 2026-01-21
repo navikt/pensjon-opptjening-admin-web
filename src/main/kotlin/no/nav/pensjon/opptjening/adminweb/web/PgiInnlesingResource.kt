@@ -24,7 +24,7 @@ class PgiInnlesingResource(
     }
 
     @GetMapping("/status")
-    fun pgiStatus(): ResponseEntity<PgiStatusResponse> {
+    fun pgiStatus(): ResponseEntity<PgiInnlesingResponse> {
         auditLogUtils.auditLog(
             operation = AuditLogUtils.Operation.READ,
             function = "pgi status",
@@ -33,7 +33,7 @@ class PgiInnlesingResource(
             ResponseEntity.ok(poppKlient.hentPgiInnlesingStatus())
         } catch (t: Throwable) {
             secure.warn("Kunne ikke hente PGI-status", t)
-            ResponseEntity.internalServerError().body(PgiStatusResponse.Error("Intern feil"))
+            ResponseEntity.internalServerError().body(PgiInnlesingResponse.Error("Intern feil"))
         }
     }
 
@@ -41,7 +41,7 @@ class PgiInnlesingResource(
     fun pgiSettSekvensnummer(
         @RequestParam("dato") datoInput: String,
         @RequestParam("begrunnelse") begrunnelse: String,
-    ): ResponseEntity<PgiStatusResponse> {
+    ): ResponseEntity<PgiInnlesingResponse> {
         auditLogUtils.auditLog(
             operation = AuditLogUtils.Operation.WRITE,
             function = "pgi sett sekvensnummer",
@@ -52,10 +52,10 @@ class PgiInnlesingResource(
         return try {
             if (dato != null && !ValidationUtils.gyldigIsoDato(dato)) {
                 secure.warn("ugyldig format på dato")
-                ResponseEntity.badRequest().body(PgiStatusResponse.Error("Ugyldig dato"))
+                ResponseEntity.badRequest().body(PgiInnlesingResponse.Error("Ugyldig dato"))
             } else if (dato == null) {
                 secure.warn("Forsøk på å sette tom dato")
-                ResponseEntity.badRequest().body(PgiStatusResponse.Error("TODO: Tom dato er foreløpig ikke støttet"))
+                ResponseEntity.badRequest().body(PgiInnlesingResponse.Error("TODO: Tom dato er foreløpig ikke støttet"))
             } else {
                 ResponseEntity.ok(
                     poppKlient.settSekvensnummer(
@@ -67,14 +67,14 @@ class PgiInnlesingResource(
             }
         } catch (t: Throwable) {
             secure.warn("Kunne ikke sette sekvensnummer", t)
-            ResponseEntity.internalServerError().body(PgiStatusResponse.Error("Intern feil"))
+            ResponseEntity.internalServerError().body(PgiInnlesingResponse.Error("Intern feil"))
         }
     }
 
     @PostMapping("/sett-sekvensnummer-til-forste")
     fun pgiSettSekvensnummerTilForste(
         @RequestParam("begrunnelse") begrunnelse: String,
-    ): ResponseEntity<PgiStatusResponse> {
+    ): ResponseEntity<PgiInnlesingResponse> {
         auditLogUtils.auditLog(
             operation = AuditLogUtils.Operation.WRITE,
             function = "pgi sett sekvensnummer forste",
@@ -89,14 +89,14 @@ class PgiInnlesingResource(
             ResponseEntity.ok(response)
         } catch (t: Throwable) {
             secure.warn("Kunne ikke sette sekvensnummer", t)
-            ResponseEntity.internalServerError().body(PgiStatusResponse.Error("Intern feil"))
+            ResponseEntity.internalServerError().body(PgiInnlesingResponse.Error("Intern feil"))
         }
     }
 
     @PostMapping("/slett-sekvensnummer")
     fun pgiSlettSekvensnummer(
         @RequestParam("begrunnelse") begrunnelse: String,
-    ): ResponseEntity<PgiStatusResponse> {
+    ): ResponseEntity<PgiInnlesingResponse> {
         auditLogUtils.auditLog(
             operation = AuditLogUtils.Operation.WRITE,
             function = "pgi sett sekvensnummer forste",
@@ -111,7 +111,7 @@ class PgiInnlesingResource(
             ResponseEntity.ok(response)
         } catch (t: Throwable) {
             secure.warn("Kunne ikke slette sekvensnummer", t)
-            ResponseEntity.internalServerError().body(PgiStatusResponse.Error("Intern feil"))
+            ResponseEntity.internalServerError().body(PgiInnlesingResponse.Error("Intern feil"))
         }
     }
 
@@ -121,7 +121,7 @@ class PgiInnlesingResource(
         @RequestParam("fnr") fnr: String,
         @RequestParam("ar") ar: Int,
         @RequestParam("begrunnelse") begrunnelse: String,
-    ): ResponseEntity<PgiStatusResponse> {
+    ): ResponseEntity<PgiInnlesingResponse> {
         auditLogUtils.auditLog(
             operation = AuditLogUtils.Operation.WRITE,
             function = "pgi synkroniser person",
@@ -132,7 +132,7 @@ class PgiInnlesingResource(
         return try {
             if (!ValidationUtils.gyldigFnrInput(fnr)) {
                 secure.warn("synkroniser-person: ugyldige tegn i fnr")
-                ResponseEntity.badRequest().body(PgiStatusResponse.Error("Ugyldig fnr"))
+                ResponseEntity.badRequest().body(PgiInnlesingResponse.Error("Ugyldig fnr"))
             } else {
                 val response = poppKlient.hentPgiForPersonOgÅr(
                     PgiInnlesingHentRequest(fnr, ar)
@@ -141,12 +141,12 @@ class PgiInnlesingResource(
             }
         } catch (t: Throwable) {
             secure.warn("Kunne ikke synkronisere person og år", t)
-            ResponseEntity.internalServerError().body(PgiStatusResponse.Error("Intern feil"))
+            ResponseEntity.internalServerError().body(PgiInnlesingResponse.Error("Intern feil"))
         }
     }
 
     @GetMapping("/list-feilede")
-    fun pgiListFeilede(): ResponseEntity<PgiStatusResponse> {
+    fun pgiListFeilede(): ResponseEntity<PgiInnlesingResponse> {
         auditLogUtils.auditLog(
             operation = AuditLogUtils.Operation.READ,
             function = "pgi list feilede",
@@ -155,7 +155,7 @@ class PgiInnlesingResource(
             ResponseEntity.ok(poppKlient.hentFeiledePgi())
         } catch (t: Throwable) {
             secure.warn("Kunne ikke liste feilede", t)
-            ResponseEntity.internalServerError().body(PgiStatusResponse.Error("Intern feil"))
+            ResponseEntity.internalServerError().body(PgiInnlesingResponse.Error("Intern feil"))
         }
     }
 
@@ -163,7 +163,7 @@ class PgiInnlesingResource(
     fun pgiSettStatus(
         @RequestParam("tilstand") tilstand: String,
         @RequestParam("begrunnelse") begrunnelse: String,
-    ): ResponseEntity<PgiStatusResponse> {
+    ): ResponseEntity<PgiInnlesingResponse> {
         auditLogUtils.auditLog(
             operation = AuditLogUtils.Operation.WRITE,
             function = "pgi sett status",
@@ -185,7 +185,7 @@ class PgiInnlesingResource(
             ResponseEntity.ok(status)
         } catch (t: Throwable) {
             secure.warn("PGI: Kunne ikke sette status", t)
-            ResponseEntity.internalServerError().body(PgiStatusResponse.Error("Intern feil"))
+            ResponseEntity.internalServerError().body(PgiInnlesingResponse.Error("Intern feil"))
         }
     }
 }

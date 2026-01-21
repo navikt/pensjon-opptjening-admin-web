@@ -6,7 +6,7 @@ import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnu
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerStatusRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerTilForsteRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensnummerRequest
-import no.nav.pensjon.opptjening.adminweb.external.dto.PgiStatusResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -48,74 +48,74 @@ class PoppKlient(
         return BehandlingStatusResponse.Ok(response)
     }
 
-    fun hentPgiInnlesingStatus(): PgiStatusResponse.StatusOk {
+    fun hentPgiInnlesingStatus(): PgiInnlesingResponse.Status {
         try {
             return restClient
                 .get()
                 .uri("/pgi/status")
                 .retrieve()
-                .body<PgiStatusResponse.StatusOk>()!!
+                .body<PgiInnlesingResponse.Status>()!!
         } catch (t: Throwable) {
             secure.warn("kunne ikke hente status for PGI-innelsing", t)
             throw PoppKlientException("Kunne ikke hente status for PGI-innlesing", t)
         }
     }
 
-    fun settSekvensnummer(request: PgiInnlesingSettSekvensnummerRequest): PgiStatusResponse.SettSekvensnummerOk {
+    fun settSekvensnummer(request: PgiInnlesingSettSekvensnummerRequest): PgiInnlesingResponse.SettSekvensnummer {
         return restClient
             .post()
             .uri("/pgi/sekvensnummer/sett")
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .body(request)
             .retrieve()
-            .body<PgiStatusResponse.SettSekvensnummerOk>()!!
+            .body<PgiInnlesingResponse.SettSekvensnummer>()!!
     }
 
-    fun settSekvensnummer(request: PgiInnlesingSettSekvensnummerTilForsteRequest): PgiStatusResponse.SettSekvensnummerOk {
+    fun settSekvensnummer(request: PgiInnlesingSettSekvensnummerTilForsteRequest): PgiInnlesingResponse.SettSekvensnummer {
         return restClient
             .post()
             .uri("/pgi/sekvensnummer/sett-forste")
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .body(request)
             .retrieve()
-            .body<PgiStatusResponse.SettSekvensnummerOk>()!!
+            .body<PgiInnlesingResponse.SettSekvensnummer>()!!
     }
 
-    fun slettSekvensnummer(request: PgiInnlesingSlettSekvensnummerRequest): PgiStatusResponse.SlettSekvensnummerOk {
+    fun slettSekvensnummer(request: PgiInnlesingSlettSekvensnummerRequest): PgiInnlesingResponse.SlettSekvensnummer {
         return restClient
             .post()
             .uri("/pgi/sekvensnummer/slett")
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .body(request)
             .retrieve()
-            .body<PgiStatusResponse.SlettSekvensnummerOk>()!!
+            .body<PgiInnlesingResponse.SlettSekvensnummer>()!!
     }
 
-    fun hentPgiForPersonOgÅr(request: PgiInnlesingHentRequest): PgiStatusResponse.HentPgiForPersonOgÅrOk {
+    fun hentPgiForPersonOgÅr(request: PgiInnlesingHentRequest): PgiInnlesingResponse.`HentPgiForPersonOgÅr` {
         return restClient
             .post()
             .uri("/pgi/hent")
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .body(request)
             .retrieve()
-            .body<PgiStatusResponse.HentPgiForPersonOgÅrOk>()!!
+            .body<PgiInnlesingResponse.`HentPgiForPersonOgÅr`>()!!
 
     }
 
-    fun hentFeiledePgi(): PgiStatusResponse.ListFeiledeOk {
+    fun hentFeiledePgi(): PgiInnlesingResponse.ListFeilede {
         try {
             return restClient
                 .get()
                 .uri("/pgi/feilet/list")
                 .retrieve()
-                .body<PgiStatusResponse.ListFeiledeOk>()!!
+                .body<PgiInnlesingResponse.ListFeilede>()!!
         } catch (t: Throwable) {
             secure.warn("kunne ikke hente status for PGI-innelsing", t)
             throw PoppKlientException("Kunne ikke hente status for PGI-innlesing", t)
         }
     }
 
-    fun settPgiSekvensnummerStatus(request: PgiInnlesingSettSekvensnummerStatusRequest): PgiStatusResponse.StatusOk {
+    fun settPgiSekvensnummerStatus(request: PgiInnlesingSettSekvensnummerStatusRequest): PgiInnlesingResponse.Status {
         try {
             return restClient
                 .post()
@@ -123,7 +123,7 @@ class PoppKlient(
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .retrieve()
-                .body<PgiStatusResponse.StatusOk>()!!
+                .body<PgiInnlesingResponse.Status>()!!
         } catch (t: Throwable) {
             secure.warn("kunne ikke sette status for PGI-sekvensnummer", t)
             throw PoppKlientException("kunne ikke sette status for PGI-sekvensnummer", t)

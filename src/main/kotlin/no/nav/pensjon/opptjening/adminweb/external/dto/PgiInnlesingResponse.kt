@@ -1,33 +1,33 @@
 package no.nav.pensjon.opptjening.adminweb.external.dto
 
-sealed class PgiStatusResponse {
-    data class StatusOk(
+sealed class PgiInnlesingResponse {
+    data class Status(
         val sekvensnummer: PgiSekvensnummerStatus
-    ) : PgiStatusResponse() {
+    ) : PgiInnlesingResponse() {
         data class PgiSekvensnummerStatus(
             val sekvensnummer: Long?,
             val aktiv: Boolean?,
         )
     }
 
-    data class SettSekvensnummerOk(
+    data class SettSekvensnummer(
         val success: Boolean,
         val sekvensnummer: Long?,
-    ) : PgiStatusResponse()
+    ) : PgiInnlesingResponse()
 
-    data class SlettSekvensnummerOk(
+    data class SlettSekvensnummer(
         val sekvensnummerHarBlittSlettet: Boolean,
         val tidligereSekvensnummer: Long?,
-    ) : PgiStatusResponse()
+    ) : PgiInnlesingResponse()
 
-    data class HentPgiForPersonOgÅrOk(
+    data class HentPgiForPersonOgÅr(
         val success: Boolean,
         val debug: String,
-    ) : PgiStatusResponse()
+    ) : PgiInnlesingResponse()
 
-    data class ListFeiledeOk(
+    data class ListFeilede(
         val feilede: List<FeilInformasjon>
-    ) : PgiStatusResponse() {
+    ) : PgiInnlesingResponse() {
         data class FeilInformasjon(
             val fnr: String?,
             val ar: Int?,
@@ -38,5 +38,5 @@ sealed class PgiStatusResponse {
 
     data class Error(
         val message: String
-    ) : PgiStatusResponse()
+    ) : PgiInnlesingResponse()
 }
