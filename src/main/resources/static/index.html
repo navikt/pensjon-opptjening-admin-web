@@ -21,6 +21,17 @@
         .info {
             background-color: darkgray;
         }
+
+        #miljoliste {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        #miljoliste a {
+            text-decoration: none;
+            color: blue;
+        }
     </style>
     <script>
         function init() {
@@ -92,6 +103,13 @@
 <h1>Pensjonopptjening - Admin</h1>
 
 <p>
+<div id="miljoliste">
+    <a href="https://pensjon-opptjening-admin-web.intern.dev.nav.no">Q2</a>
+    <a href="https://pensjon-opptjening-admin-web.intern-q0.dev.nav.no">Q0</a>
+    <a href="https://pensjon-opptjening-admin-web.intern-q1.dev.nav.no">Q1</a>
+    <a href="https://pensjon-opptjening-admin-web.intern-q5.dev.nav.no">Q5</a>
+    <a href="https://pensjon-opptjening-admin-web.intern.nav.no">PROD</a>
+</div>
 <div id="environmentLabel">
     Ikke initalisert. Fiks javascript.
 </div>
