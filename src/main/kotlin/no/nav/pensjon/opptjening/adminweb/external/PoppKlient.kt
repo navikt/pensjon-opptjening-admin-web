@@ -7,6 +7,9 @@ import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnu
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerTilForsteRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensnummerRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringSettIdRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringSettStatusRequest
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -129,6 +132,45 @@ class PoppKlient(
             throw PoppKlientException("kunne ikke sette status for PGI-sekvensnummer", t)
         }
     }
+
+    fun hentPgiSynkroniseringStatus(): PgiSynkroniseringResponse.Status {
+        return restClient
+            .get()
+            .uri("/pgisync/status")
+            .retrieve()
+            .body<PgiSynkroniseringResponse.Status>()!!
+    }
+
+    fun settPgiSynkroniseringId(request: PgiSynkroniseringSettIdRequest): PgiSynkroniseringResponse.Status {
+        try {
+            return restClient
+                .post()
+                .uri("/pgisync/id/sett-id")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .retrieve()
+                .body<PgiSynkroniseringResponse.Status>()!!
+        } catch (t: Throwable) {
+            secure.warn("kunne ikke sette id for PGI-synkronisering", t)
+            throw PoppKlientException("kunne ikke sette id for PGI-synkronisering", t)
+        }
+    }
+
+    fun settPgiSynkroniseringIdStatus(request: PgiSynkroniseringSettStatusRequest): PgiSynkroniseringResponse.Status {
+        try {
+            return restClient
+                .post()
+                .uri("/pgisync/id/sett-status")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .retrieve()
+                .body<PgiSynkroniseringResponse.Status>()!!
+        } catch (t: Throwable) {
+            secure.warn("kunne ikke sette status for PGI-synkronisering", t)
+            throw PoppKlientException("kunne ikke sette status for PGI-synkronisering", t)
+        }
+    }
+
 
     // TODO: Tilby senere
     fun rekjorFeilede() {
