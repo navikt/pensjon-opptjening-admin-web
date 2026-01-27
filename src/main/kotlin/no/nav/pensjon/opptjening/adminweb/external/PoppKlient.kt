@@ -136,7 +136,7 @@ class PoppKlient(
     fun hentPgiSynkroniseringStatus(): PgiSynkroniseringResponse.Status {
         return restClient
             .get()
-            .uri("/pgisync/status")
+            .uri("/pgi-synkronisering/status")
             .retrieve()
             .body<PgiSynkroniseringResponse.Status>()!!
     }
@@ -145,7 +145,7 @@ class PoppKlient(
         try {
             return restClient
                 .post()
-                .uri("/pgisync/id/sett-id")
+                .uri("/pgi-synkronisering/id/sett-id")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .retrieve()
@@ -160,7 +160,7 @@ class PoppKlient(
         try {
             return restClient
                 .post()
-                .uri("/pgisync/id/sett-status")
+                .uri("/pgi-synkronisering/id/sett-status")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .retrieve()

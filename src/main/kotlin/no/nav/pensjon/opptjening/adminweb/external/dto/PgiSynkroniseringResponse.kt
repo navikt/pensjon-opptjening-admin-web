@@ -10,11 +10,6 @@ sealed class PgiSynkroniseringResponse {
         )
     }
 
-    data class SettId(
-        val success: Boolean,
-        val sekvensnummer: Long?,
-    ) : PgiSynkroniseringResponse()
-
     data class Error(
         val message: String
     ) : PgiSynkroniseringResponse()
