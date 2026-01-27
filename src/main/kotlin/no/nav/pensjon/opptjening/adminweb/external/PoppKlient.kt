@@ -134,11 +134,16 @@ class PoppKlient(
     }
 
     fun hentPgiSynkroniseringStatus(): PgiSynkroniseringResponse.Status {
-        return restClient
-            .get()
-            .uri("/pgi-synkronisering/status")
-            .retrieve()
-            .body<PgiSynkroniseringResponse.Status>()!!
+        try {
+            return restClient
+                .get()
+                .uri("/pgi-synkronisering/status")
+                .retrieve()
+                .body<PgiSynkroniseringResponse.Status>()!!
+        } catch (t: Throwable) {
+            secure.warn("Kunne ikke hente status for PGI-innlesing", t)
+            throw PoppKlientException("Kunne ikke hente status for PGI-innlesing", t)
+        }
     }
 
     fun settPgiSynkroniseringId(request: PgiSynkroniseringSettIdRequest): PgiSynkroniseringResponse.Status {
@@ -169,13 +174,6 @@ class PoppKlient(
             secure.warn("kunne ikke sette status for PGI-synkronisering", t)
             throw PoppKlientException("kunne ikke sette status for PGI-synkronisering", t)
         }
-    }
-
-
-    // TODO: Tilby senere
-    fun rekjorFeilede() {
-        // /feilet/rekjor
-        throw NotImplementedError("Ikke implementert enda")
     }
 
     class PoppKlientException(message: String, cause: Throwable? = null) : RuntimeException(message, cause)
