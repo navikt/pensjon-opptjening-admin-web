@@ -165,14 +165,14 @@ class PoppKlient(
         try {
             return restClient
                 .post()
-                .uri("/pgi-synkronisering/id/sett-status")
+                .uri("/pgi-synkronisering/id/sett-tilstand")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .retrieve()
                 .body<PgiSynkroniseringResponse.Status>()!!
         } catch (t: Throwable) {
-            secure.warn("kunne ikke sette status for PGI-synkronisering", t)
-            throw PoppKlientException("kunne ikke sette status for PGI-synkronisering", t)
+            secure.warn("kunne ikke sette tilstand for PGI-synkronisering", t)
+            throw PoppKlientException("kunne ikke sette tilstand for PGI-synkronisering", t)
         }
     }
 
