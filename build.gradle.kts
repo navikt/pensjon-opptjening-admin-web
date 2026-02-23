@@ -11,22 +11,23 @@ val assertJVersion = "3.27.6"
 val jsonUnitVersion = "5.0.0"
 val wiremockVersion = "3.13.1"
 val mockitoVersion = "6.1.0"
-val navTokenSupportVersion = "5.0.37"
+val navTokenSupportVersion = "6.0.3"
 val hibernateValidatorVersion = "8.0.1.Final"
-val junit5Version = "5.12.2"
+val junit5Version = "6.0.3"
 
 
 val snakeYamlVersion = "2.5"
 val snappyJavaVersion = "1.1.10.8"
 val httpClient5Version = "5.5.1"
 val httpClientVersion = "4.5.14" // deprecated, men brukes av
+val jettyVersion = "12.1.6" // trengs pga wiremock
 
 plugins {
-    val kotlinVersion = "2.2.21"
+    val kotlinVersion = "2.3.10"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
-    id("org.springframework.boot") version "3.5.7"
+    id("org.springframework.boot") version "4.0.3"
     id("com.github.ben-manes.versions") version "0.53.0"
 }
 
@@ -54,7 +55,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework:spring-aspects")
     implementation("no.nav.security:token-validation-spring:$navTokenSupportVersion")
@@ -75,7 +76,7 @@ dependencies {
 
     // Test
     testImplementation(kotlin("test"))
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoVersion")
     testImplementation("io.mockk:mockk:${mockkVersion}")
     testImplementation("org.wiremock:wiremock-jetty12:$wiremockVersion")
@@ -87,6 +88,9 @@ dependencies {
 
     testImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
 
+    // trengs fordi wiremock henger etter på jetty-versjon i forhold til spring 4
+    testImplementation("org.eclipse.jetty:jetty-bom:$jettyVersion")
+    testImplementation("org.eclipse.jetty.ee10:jetty-ee10-bom:${jettyVersion}")
 }
 
 tasks.test {
