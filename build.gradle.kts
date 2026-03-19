@@ -91,6 +91,7 @@ dependencies {
     // trengs fordi wiremock henger etter på jetty-versjon i forhold til spring 4
     testImplementation("org.eclipse.jetty:jetty-bom:$jettyVersion")
     testImplementation("org.eclipse.jetty.ee10:jetty-ee10-bom:${jettyVersion}")
+    testImplementation("org.eclipse.jetty.ee10:jetty-ee10-servlet:${jettyVersion}")
 }
 
 tasks.test {
