@@ -491,6 +491,127 @@
     </table>
 </form>
 
+<!-- ##################################### Person ################################ -->
+
+<div class="section-header">
+    Person - Fødselsår
+</div>
+
+<form id="legg-til-foedselsaar" action="/person/foedselsaar" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label for="personId">Person-ID</label>
+            </td>
+            <td>
+                <input type="number" name="personId" id="personId" size="20"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="foedselsaar">Fødselsår</label>
+            </td>
+            <td>
+                <input type="number" name="foedselsaar" id="foedselsaar" size="4" min="1900" max="2100"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="master">Master</label>
+            </td>
+            <td>
+                <input type="text" name="master" id="master" size="50"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="opprettetRegistrert">Opprettet/Registrert (yyyy-MM-ddTHH:mm:ss)</label>
+            </td>
+            <td>
+                <input type="datetime-local" name="opprettetRegistrert" id="opprettetRegistrert" step="1"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="opprettetSystemKilde">Opprettet system kilde</label>
+            </td>
+            <td>
+                <input type="text" name="opprettetSystemKilde" id="opprettetSystemKilde" size="50"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="opprettetKilde">Opprettet kilde</label>
+            </td>
+            <td>
+                <input type="text" name="opprettetKilde" id="opprettetKilde" size="50"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="legg-til-foedselsaar-referanse">Referanse</label>
+            </td>
+            <td>
+                <input type="text" name="referanse" id="legg-til-foedselsaar-referanse" size="100"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="legg-til-foedselsaar-begrunnelse">begrunnelse</label>
+            </td>
+            <td>
+                <input type="text" name="begrunnelse" id="legg-til-foedselsaar-begrunnelse" size="500">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="submit" value="Legg til fødselsår">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+
+<form id="person-foedselsaar-slett" action="/person/foedselsaar/slett" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label for="slett-foedselsaar-person-id">Person ID</label>
+            </td>
+            <td>
+                <input type="number" name="personId" id="slett-foedselsaar-person-id" size="20"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="slett-foedselsaar-foedselsaar-id">Fødselsår ID</label>
+            </td>
+            <td>
+                <input type="number" name="foedselsaarId" id="slett-foedselsaar-foedselsaar-id" size="20"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="slett-foedselsaar-begrunnelse">begrunnelse</label>
+            </td>
+            <td>
+                <input type="text" name="begrunnelse" id="slett-foedselsaar-begrunnelse" size="500">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="submit" value="Slett fødselsår">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
 <!--  ################################# UFERDIG FUNKSJONALITET ################################ -->
 
 <div class="prerelease">

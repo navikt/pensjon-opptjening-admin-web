@@ -1,12 +1,13 @@
 package no.nav.pensjon.opptjening.adminweb.external
 
 import no.nav.pensjon.opptjening.adminweb.external.dto.BehandlingStatusResponse
+import no.nav.pensjon.opptjening.adminweb.external.dto.LeggTilFoedselsaarRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingHentRequest
+import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerStatusRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSettSekvensnummerTilForsteRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensnummerRequest
-import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringSettIdRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringSettStatusRequest
@@ -173,6 +174,34 @@ class PoppKlient(
         } catch (t: Throwable) {
             secure.warn("kunne ikke sette tilstand for PGI-synkronisering", t)
             throw PoppKlientException("kunne ikke sette tilstand for PGI-synkronisering", t)
+        }
+    }
+
+    fun leggTilFoedselsaar(request: LeggTilFoedselsaarRequest): String? {
+        try {
+            return restClient
+                .post()
+                .uri("/person/${request.personId}/foedselsaar")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .retrieve()
+                .body<String>()
+        } catch (t: Throwable) {
+            secure.warn("Kunne ikke legge til fødselsår", t)
+            throw PoppKlientException("Kunne ikke legge til fødselsår", t)
+        }
+    }
+
+    fun slettFoedselsaar(personId: Long, foedselsaarId: Long): String? {
+        try {
+            return restClient
+                .delete()
+                .uri("/person/$personId/foedselsaar/$foedselsaarId")
+                .retrieve()
+                .body<String>()
+        } catch (t: Throwable) {
+            secure.warn("Kunne ikke slette fødselsår", t)
+            throw PoppKlientException("Kunne ikke slette fødselsår", t)
         }
     }
 
