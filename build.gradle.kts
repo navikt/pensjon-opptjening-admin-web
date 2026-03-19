@@ -11,19 +11,19 @@ val assertJVersion = "3.27.6"
 val jsonUnitVersion = "5.0.0"
 val wiremockVersion = "3.13.1"
 val mockitoVersion = "6.1.0"
-val navTokenSupportVersion = "6.0.3"
-val hibernateValidatorVersion = "8.0.1.Final"
+val navTokenSupportVersion = "6.0.4"
+val hibernateValidatorVersion = "9.1.0.Final"
 val junit5Version = "6.0.3"
 
 
-val snakeYamlVersion = "2.5"
+val snakeYamlVersion = "2.6"
 val snappyJavaVersion = "1.1.10.8"
 val httpClient5Version = "5.5.1"
 val httpClientVersion = "4.5.14" // deprecated, men brukes av
 val jettyVersion = "12.1.6" // trengs pga wiremock
 
 plugins {
-    val kotlinVersion = "2.3.10"
+    val kotlinVersion = "2.3.20"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
