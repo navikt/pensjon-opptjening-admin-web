@@ -6,6 +6,8 @@ import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringSettIdRe
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringSettStatusRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.SynkroniseringIdStatus
 import no.nav.pensjon.opptjening.adminweb.utils.AuditLogUtils
+import no.nav.popp.web.api.endpoint.pgi.model.PgiSynkroniseringVerifiserInntektRequest
+import no.nav.popp.web.api.endpoint.pgi.model.PgiVerifiserInntektResponse
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.slf4j.LoggerFactory
@@ -119,4 +121,32 @@ class PgiSynkroniseringResource(
             return ResponseEntity.internalServerError().body(PgiSynkroniseringResponse.Error("Intern feil"))
         }
     }
+
+    @PostMapping("/person/sjekk")
+    fun settStatus(
+        @RequestParam("fnr") fnr: String,
+        @RequestParam("ar") ar: Int,
+        @RequestParam("begrunnelse") begrunnelse: String,
+    ): ResponseEntity<PgiVerifiserInntektResponse> {
+        try {
+            auditLogUtils.auditLog(
+                operation = AuditLogUtils.Operation.READ,
+                fnr = fnr,
+                function = "pgi-synkronisering:person-sjekk",
+                begrunnelse = begrunnelse,
+                informasjon = "Sjekk av PGI-rådata mot registrert inntekt for person",
+            )
+            val status = poppKlient.sjekkPgiInntekt(
+                request = PgiSynkroniseringVerifiserInntektRequest(
+                    fnr = fnr,
+                    ar = ar,
+                )
+            )
+            return ResponseEntity.ok().body(status)
+        } catch (ex: Exception) {
+            secure.warn("Kunne ikke sjekke PGI-inntekt for person", ex)
+            return ResponseEntity.internalServerError().body(PgiVerifiserInntektResponse.Error("Intern feil"))
+        }
+    }
+
 }

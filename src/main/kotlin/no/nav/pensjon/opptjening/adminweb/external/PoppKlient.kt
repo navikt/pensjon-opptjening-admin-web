@@ -11,6 +11,8 @@ import no.nav.pensjon.opptjening.adminweb.external.dto.PgiInnlesingSlettSekvensn
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringResponse
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringSettIdRequest
 import no.nav.pensjon.opptjening.adminweb.external.dto.PgiSynkroniseringSettStatusRequest
+import no.nav.popp.web.api.endpoint.pgi.model.PgiSynkroniseringVerifiserInntektRequest
+import no.nav.popp.web.api.endpoint.pgi.model.PgiVerifiserInntektResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -174,6 +176,21 @@ class PoppKlient(
         } catch (t: Throwable) {
             secure.warn("kunne ikke sette tilstand for PGI-synkronisering", t)
             throw PoppKlientException("kunne ikke sette tilstand for PGI-synkronisering", t)
+        }
+    }
+
+    fun sjekkPgiInntekt(request: PgiSynkroniseringVerifiserInntektRequest): PgiVerifiserInntektResponse.Ok {
+        try {
+            return restClient
+                .post()
+                .uri("/pgi-synkronisering/person/sjekk")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .retrieve()
+                .body<PgiVerifiserInntektResponse.Ok>()!!
+        } catch (t: Throwable) {
+            secure.warn("kunne ikke sjekke PGI-inntekt for person", t)
+            throw PoppKlientException("kunne ikke sjekke PGI-inntekt for person", t)
         }
     }
 
