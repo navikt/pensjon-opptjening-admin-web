@@ -11,7 +11,7 @@ val assertJVersion = "3.27.6"
 val jsonUnitVersion = "5.0.0"
 val wiremockVersion = "3.13.1"
 val mockitoVersion = "6.1.0"
-val navTokenSupportVersion = "6.0.4"
+val navTokenSupportVersion = "6.0.5"
 val hibernateValidatorVersion = "9.1.0.Final"
 val junit5Version = "6.0.3"
 
