@@ -2,6 +2,15 @@ name: 'Bygg og deploy branch til dev-gcp'
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Miljø'
+        options:
+          - q0
+          - q1
+          - q2
+          - q5
+        default: q2
 
 jobs:
   build_and_push:
@@ -54,7 +63,7 @@ jobs:
       - name: 'Deploy til dev-gcp'
         uses: nais/deploy/actions/deploy@v2
         env:
-          RESOURCE: nais/dev-gcp-q2.yml
+          RESOURCE: nais/dev-gcp-${{inputs.environment}}.yml
           CLUSTER: dev-gcp
           IMAGE: ${{ steps.docker-push.outputs.image }}
           TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
