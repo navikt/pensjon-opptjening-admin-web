@@ -3,37 +3,37 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val azureAdClient = "0.0.7"
-val jacksonVersion = "2.21.2"
+val jacksonVersion = "2.21.3"
 val logbackEncoderVersion = "9.0"
 val springCloudContractVersion = "4.0.4"
 val mockkVersion = "1.14.6"
-val assertJVersion = "3.27.6"
+val assertJVersion = "3.27.7"
 val jsonUnitVersion = "5.0.0"
 val wiremockVersion = "3.13.1"
 val mockitoVersion = "6.1.0"
-val navTokenSupportVersion = "6.0.5"
+val navTokenSupportVersion = "6.0.7"
 val hibernateValidatorVersion = "9.1.0.Final"
 val junit5Version = "6.0.3"
 
 
 val snakeYamlVersion = "2.6"
 val snappyJavaVersion = "1.1.10.8"
-val httpClient5Version = "5.5.2"
+// left this to spring
+// val httpClient5Version = "5.6.1"
 val httpClientVersion = "4.5.14" // deprecated, men brukes av
 val jettyVersion = "12.1.6" // trengs pga wiremock
 
 plugins {
-    val kotlinVersion = "2.3.20"
+    val kotlinVersion = "2.3.21"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
-    id("org.springframework.boot") version "4.0.5"
-    id("com.github.ben-manes.versions") version "0.53.0"
+    id("org.springframework.boot") version "4.0.6"
+    id("com.github.ben-manes.versions") version "0.54.0"
 }
 
 apply(plugin = "io.spring.dependency-management")
 apply(plugin = "kotlin-jpa")
-
 
 group = "no.nav.pensjon.opptjening"
 
@@ -71,7 +71,7 @@ dependencies {
     implementation("org.yaml:snakeyaml:$snakeYamlVersion")
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     implementation("org.xerial.snappy:snappy-java:$snappyJavaVersion")
-    implementation("org.apache.httpcomponents.client5:httpclient5:$httpClient5Version")
+    implementation("org.apache.httpcomponents.client5:httpclient5")
     implementation("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
 
     // Test
