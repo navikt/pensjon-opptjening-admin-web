@@ -1,4 +1,4 @@
-name: 'Bygg og deploy'
+name: 'Bygg og deploy til test (automatisk)'
 
 on:
   workflow_dispatch:
@@ -83,11 +83,3 @@ jobs:
           IMAGE: ${{ steps.docker-push.outputs.image }}
           TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
 
-      - name: 'Deploy til prod-gcp (only if main)'
-        uses: nais/deploy/actions/deploy@v2
-        if: ${{github.ref == 'refs/heads/main' }}
-        env:
-          RESOURCE: nais/prod-gcp.yml
-          CLUSTER: prod-gcp
-          IMAGE: ${{ steps.docker-push.outputs.image }}
-          TELEMETRY: ${{ steps.docker-push.outputs.telemetry }}
