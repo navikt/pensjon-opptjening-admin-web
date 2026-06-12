@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val azureAdClient = "0.0.7"
-val jacksonVersion = "2.21.3"
+val jacksonVersion = "2.22.0"
 val logbackEncoderVersion = "9.0"
 val springCloudContractVersion = "4.0.4"
 val mockkVersion = "1.14.6"
@@ -21,14 +21,14 @@ val snappyJavaVersion = "1.1.10.8"
 // left this to spring
 // val httpClient5Version = "5.6.1"
 val httpClientVersion = "4.5.14" // deprecated, men brukes av
-val jettyVersion = "12.1.6" // trengs pga wiremock
+val jettyVersion = "12.1.10" // trengs pga wiremock
 
 plugins {
-    val kotlinVersion = "2.3.21"
+    val kotlinVersion = "2.4.0"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
-    id("org.springframework.boot") version "4.0.6"
+    id("org.springframework.boot") version "4.1.0"
     id("com.github.ben-manes.versions") version "0.54.0"
 }
 
