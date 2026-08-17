@@ -13,6 +13,11 @@ spec:
       value: https://pensjon-opptjening-filadapter.dev-fss-pub.nais.io
     - name: POPP_URL
       value: https://pensjon-popp-q2.dev-fss-pub.nais.io/popp/api
+    - name: JAVA_TRUSTSTORE_OPTIONS
+      value: "-Djavax.net.ssl.trustStore=$(NAV_TRUSTSTORE_PATH)
+              -Djavax.net.ssl.trustStorePassword=$(NAV_TRUSTSTORE_PASSWORD)"
+    - name: JDK_JAVA_OPTIONS
+      value: "$(JAVA_PROXY_OPTIONS) $(JAVA_TRUSTSTORE_OPTIONS)"
   azure:
     sidecar:
       enabled: true
